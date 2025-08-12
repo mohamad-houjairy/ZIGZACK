@@ -22,7 +22,25 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+public function contentCreator()
+    {
+        return $this->hasOne(ContentCreator::class);
+    }
 
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
