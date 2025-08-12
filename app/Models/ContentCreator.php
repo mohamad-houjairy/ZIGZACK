@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ContentCreator extends Model
 {
     use HasFactory;
+    protected $fillable = [
+       'user_id','bio','profile_image',
+    ];
 }
