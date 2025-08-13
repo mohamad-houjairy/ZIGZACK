@@ -11,4 +11,12 @@ class ContentCreator extends Model
     protected $fillable = [
        'user_id','bio','profile_image',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function videos()
+    {
+        return $this->hasMany(Video::class, 'creator_id');
+    }
 }

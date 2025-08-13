@@ -11,4 +11,13 @@ class Subscription extends Model
     protected $fillable = [
         'user_id', 'type', 'start_date', 'end_date', 'status'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+    
 }

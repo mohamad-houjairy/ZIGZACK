@@ -10,6 +10,9 @@ class ContentCreatorController extends Controller
     public function index()
     {
         $contentCreators = ContentCreator::all();
+        if ($contentCreators->isEmpty()) {
+            return response()->json(['message' => 'No content creators found'], 404);
+        }
         return response()->json($contentCreators);
     }
 

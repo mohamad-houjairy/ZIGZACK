@@ -16,4 +16,17 @@ class Payment extends Model
         'payment_method',
         'status',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function video()
+    {
+        return $this->belongsTo(Video::class);
+    }
+    public function subscription()
+    {
+        return $this->belongsTo(Subscription::class);
+    }
+
 }
