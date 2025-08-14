@@ -21,6 +21,10 @@ class Video extends Model
     {
         return $this->belongsTo(ContentCreator::class, 'creator_id');
     }
+public function festival()
+{
+    return $this->hasOne(FestivalVideo::class);
+}
 
     public function category()
     {
@@ -40,5 +44,5 @@ class Video extends Model
     {
         return $this->hasMany(Payment::class);
     }
-    
+
 }

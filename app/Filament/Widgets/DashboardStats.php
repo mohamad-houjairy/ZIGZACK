@@ -9,11 +9,14 @@ use App\Models\User;
 use App\Models\Admin;
 use App\Models\Category;
 use App\Models\ContentCreator;
+use App\Models\FestivalVideo;
 use App\Models\Payment;
 use App\Models\Post;
 use App\Models\Review;
 use App\Models\Subscription;
 use App\Models\Video;
+use Filament\Actions\Action;
+
 class DashboardStats extends BaseWidget
 {
     protected function getCards(): array
@@ -23,6 +26,7 @@ class DashboardStats extends BaseWidget
                 ->description('Registered users')
                 ->descriptionIcon('heroicon-o-users')
                 ->color('primary'),
+
 
             Card::make('Total Actors', Actor::count())
                 ->description('Actors in system')
@@ -56,6 +60,10 @@ class DashboardStats extends BaseWidget
 
                  Card::make('Total Videos', Video::count())
                 ->description('Videos in system')
+                ->descriptionIcon('heroicon-o-shield-check')
+                ->color('success'),
+                Card::make('Total Festival Videos', FestivalVideo::count())
+                ->description('Festival videos in system')
                 ->descriptionIcon('heroicon-o-shield-check')
                 ->color('success'),
         ];

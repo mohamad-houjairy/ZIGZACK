@@ -44,4 +44,11 @@ $token = $user->createToken('token')->plainTextToken;
 
         return response()->json(['message' => 'Login successful', 'user' => $user, 'token' => $token]);
     }
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        $user->tokens()->delete();
+
+        return response()->json(['message' => 'Logout successful']);
+    }
 }
