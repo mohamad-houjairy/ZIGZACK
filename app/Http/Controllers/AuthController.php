@@ -25,8 +25,7 @@ class AuthController extends Controller
        ]);
        $token = $user->createToken('token')->plainTextToken;
 
-       return response()->json(['message' => 'User registered successfully', 'user' => $user, 'token' => $token], 201);
-    }
+         return redirect()->route('login')->with('success', 'Registration successful!');}
 public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -35,20 +34,33 @@ public function login(Request $request)
         ]);
 
       if (!Auth::attempt($credentials)) {
-    return response()->json(['message' => 'email or password is incorrect'], 401);
+
+      return back()->withErrors(['email' => 'Invalid credentials'])->withInput($request->only('email'));
 }
 
 $user = User::where('email', $credentials['email'])->first();
 $token = $user->createToken('token')->plainTextToken;
 
 
-        return response()->json(['message' => 'Login successful', 'user' => $user, 'token' => $token]);
+         return redirect()->route('login')->with('success', 'Login successful!');
     }
+    // public function test(){
+    //     return view('auth.login');
+    // }
     public function logout(Request $request)
     {
         $user = $request->user();
         $user->tokens()->delete();
 
         return response()->json(['message' => 'Logout successful']);
+    }
+    public function enter(){
+        return view('Auth.login');
+    }
+      public function enter1(){
+        return view('Auth.register');
+    }
+    public function enterResetPassword(){
+        return view('Auth.reset_pass');
     }
 }

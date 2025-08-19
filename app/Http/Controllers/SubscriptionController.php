@@ -66,4 +66,9 @@ if (!$subscription) {
     return response()->json(['subscription' => $subscription], 201);
 }
 
+    public function plan()
+    {
+        // Logic to return the subscription plan view
+        return view('plan');
+    }
 }

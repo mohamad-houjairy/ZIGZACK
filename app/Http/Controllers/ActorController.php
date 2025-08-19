@@ -57,4 +57,9 @@ class ActorController extends Controller
         $actor->delete();
         return response()->json(['message' => 'Actor deleted successfully']);
     }
+    public function info()
+    {
+        // Logic to show actor information
+        return view('actor-info');
+    }
 }

@@ -57,4 +57,14 @@ class VideoController extends Controller
         return response()->json(['message' => 'Video created successfully', 'video' => $video], 201);
     }
 
+    public function info()
+    {
+        // Logic to show video information
+        return view('video_info');
+    }
+    public function watchLater()
+    {
+        // Logic to show watch later videos
+        return view('watch_later');
+    }
 }
