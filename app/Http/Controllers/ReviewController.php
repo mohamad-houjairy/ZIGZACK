@@ -20,19 +20,23 @@ class ReviewController extends Controller
 
 
 
-    public function store(Request $request)
-    {
-        // Code to save a new review
-        $validatedData = $request->validate([
-            'user_id' => 'required|integer|exists:users,id',
-            'video_id' => 'required|integer|exists:videos,id',
-            'comment' => 'required|string',
-            'rating' => 'required|integer|between:1,5',
-        ]);
+ public function storeReview(Request $request, $id)
+{
+    $validatedData = $request->validate([
+        'comment' => 'required|string',
+        'rating'  => 'required|integer|between:1,5',
+    ]);
 
-        $review = Review::create($validatedData);
-        return response()->json($review, 201);
-    }
+    // Save review with current user and video id
+    $review = Review::create([
+        'user_id'  => auth()->id(),
+        'video_id' => $id,
+        'comment'  => $validatedData['comment'],
+        'rating'   => $validatedData['rating'],
+    ]);
+
+    return redirect()->back()->with('success', 'Review added successfully!');
+}
 
 public function destroy($id)
 {

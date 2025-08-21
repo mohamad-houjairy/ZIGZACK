@@ -4,22 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Actor;
+use App\Models\Video;
 
 class ActorController extends Controller
 {
     public function index()
     {
         // Logic to list actors
-        return response()->json(Actor::all());
+        // This could be a paginated list or a simple list of actors
+        $actors= Actor::all();
+        return view('actor-index', compact('actors'));
     }
-    public function show($id)
+ public function show($id)
     {
-        // Logic to show a specific actor
         $actor = Actor::findOrFail($id);
         if (!$actor) {
             return response()->json(['error' => 'Actor not found'], 404);
         }
-        return response()->json($actor);
+
+        return view('actor-info', compact('actor' ));
     }
     public function store(Request $request)
     {
@@ -57,9 +60,5 @@ class ActorController extends Controller
         $actor->delete();
         return response()->json(['message' => 'Actor deleted successfully']);
     }
-    public function info()
-    {
-        // Logic to show actor information
-        return view('actor-info');
-    }
+
 }

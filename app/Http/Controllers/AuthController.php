@@ -9,23 +9,39 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
-    {
 
-       $validatedData = $request->validate([
-           'name' => 'required|string|max:255',
-           'email' => 'required|string|email|max:255|unique:users',
-           'password' => 'required|string|min:8|confirmed',
-       ]);
+public function register(Request $request)
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8|confirmed',
+        'role' => 'required|string|in:content_creator,user',
+    ]);
 
-       $user = User::create([
-           'name' => $validatedData['name'],
-           'email' => $validatedData['email'],
-           'password' => Hash::make($validatedData['password']),
-       ]);
-       $token = $user->createToken('token')->plainTextToken;
+    // Create user
+    $user = User::create([
+        'name' => $validatedData['name'],
+        'email' => $validatedData['email'],
+        'password' => Hash::make($validatedData['password']),
+        'role' => $validatedData['role'],
+    ]);
 
-         return redirect()->route('login')->with('success', 'Registration successful!');}
+    // If role is content_creator -> also insert in content_creators table
+    if ($validatedData['role'] === 'content_creator') {
+        \App\Models\ContentCreator::create([
+            'user_id' => $user->id,
+            'bio' => null, // default values
+            'profile_image' => null,
+        ]);
+    }
+
+    Auth::login($user);
+
+    return redirect()->route('home')->with('success', 'Registration successful!');
+}
+
+
 public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -35,24 +51,26 @@ public function login(Request $request)
 
       if (!Auth::attempt($credentials)) {
 
-      return back()->withErrors(['email' => 'Invalid credentials'])->withInput($request->only('email'));
+      return redirect()->back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
 }
 
 $user = User::where('email', $credentials['email'])->first();
 $token = $user->createToken('token')->plainTextToken;
 
 
-         return redirect()->route('login')->with('success', 'Login successful!');
+         return redirect()->route('home')->with('success', 'Login successful!');
     }
     // public function test(){
     //     return view('auth.login');
     // }
     public function logout(Request $request)
-    {
-        $user = $request->user();
-        $user->tokens()->delete();
+    {Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-        return response()->json(['message' => 'Logout successful']);
+    return redirect('/')->with('success', 'Logged out successfully!');
     }
     public function enter(){
         return view('Auth.login');

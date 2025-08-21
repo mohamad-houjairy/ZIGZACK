@@ -1,13 +1,34 @@
 @extends('share')
 @section('content')
+
   <!-- ======= HERO / MOVIE SLIDER ======= -->
   <div id="svHero" class="carousel slide sv-hero" data-bs-ride="carousel" data-bs-interval="6000">
+
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#svHero" data-bs-slide-to="0" class="active" aria-current="true"></button>
       <button type="button" data-bs-target="#svHero" data-bs-slide-to="1"></button>
     </div>
 
     <div class="carousel-inner">
+<div class="" style="z-index: 10;">
+    {{-- Success message --}}
+  @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show fixed-top m-3" role="alert" style="z-index: 1055;">
+        {{ session('success') }}    Welcome, {{ Auth::user()->name }}!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+       <script>
+        setTimeout(function() {
+            const alert = document.querySelector('.alert');
+            if(alert){
+                alert.classList.remove('show');
+                alert.classList.add('hide'); // optional for fade effect
+            }
+        }, 1500); // 1000 ms = 1 second
+    </script>
+@endif
+
+
 
       <!-- Slide 1 -->
       <div class="carousel-item active" style="background-image:url('https://image.tmdb.org/t/p/original/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg');">
@@ -22,7 +43,7 @@
           </div>
           <p class="text-white-50 mb-4">Enjoy exclusive Amazon Originals as well as popular movies and TV shows for USD 12.0/month. Watch now, cancel anytime.</p>
           <div class="d-flex gap-2">
-            <a href="{{ route('video_info') }}" class="sv-btn-primary"><i class="fa-solid fa-play"></i> Play Now</a>
+            <a href="{{ route('video-index') }}" class="sv-btn-primary"><i class="fa-solid fa-play"></i> Play Now</a>
             <a href="#" class="sv-btn-ghost"><i class="fa-regular fa-bookmark"></i> Watch Later</a>
           </div>
         </div>
@@ -53,7 +74,7 @@
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#svHero" data-bs-slide="next">
+    <button class=" carousel-control-next" type="button" data-bs-target="#svHero" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -62,119 +83,45 @@
 <!-- Section -->
   <div class="container my-5">
     <h3 class="mb-4">Trending Movies 🔥</h3>
-    <div class="row g-4">
-
-      <!-- Movie Card -->
-      <div class="col-md-3">
-        <div class="movie-card">
-          <img src="https://m.media-amazon.com/images/I/71rNJQ2g-EL._AC_SY679_.jpg" alt="John Wick 4">
-          <div class="movie-overlay">
-            <div class="movie-title">John Wick 4</div>
-            <div class="movie-info">2023 · 170 mins · Action</div>
-            <button class="btn btn-primary btn-custom">▶ Play Now</button>
-            <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Movie Card -->
-      <div class="col-md-3">
-        <div class="movie-card">
-          <img src="https://m.media-amazon.com/images/I/81Uwb5p9eNL._AC_SY679_.jpg" alt="Spider Man Memo">
-          <div class="movie-overlay">
-            <div class="movie-title">Spider Man: Across the Spider-Verse</div>
-            <div class="movie-info">2022 · 145 mins · Animation</div>
-            <button class="btn btn-primary btn-custom">▶ Play Now</button>
-            <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Movie Card -->
-      <div class="col-md-3">
-        <div class="movie-card">
-          <img src="https://m.media-amazon.com/images/I/91TqW74Hn6L._AC_SY679_.jpg" alt="The White House">
-          <div class="movie-overlay">
-            <div class="movie-title">White House Down</div>
-            <div class="movie-info">2013 · 131 mins · Thriller</div>
-            <button class="btn btn-primary btn-custom">▶ Play Now</button>
-            <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Movie Card -->
-      <div class="col-md-3">
-        <div class="movie-card">
-          <img src="https://m.media-amazon.com/images/I/81uV+UeZr6L._AC_SY679_.jpg" alt="The Post">
-          <div class="movie-overlay">
-            <div class="movie-title">The Post</div>
-            <div class="movie-info">2017 · 116 mins · Drama</div>
-            <button class="btn btn-primary btn-custom">▶ Play Now</button>
-            <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
+      <div class="row g-4">
+                @foreach ($videos as $video)
+                    <div class="col-md-3">
+                        <div class="movie-card">
+                            <img src="{{$video->video_url}}" >
+                            <div class="movie-overlay">
+                                <div class="movie-title">{{ $video->title }}</div>
+                                <div class="movie-info">
+                                    price: {{ $video->price }} . distribution: {{ $video->distribution }} <br>
+                                    category: {{ optional($video->category)->name ?? 'No category' }}
+                                </div>
+                                <button onclick="window.location='{{ route('video.show', $video->id) }}'" class="btn btn-primary btn-custom">▶ Play Now</button>
+                                <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
   </div>
    <div class="container my-5">
     <h3 class="mb-4"> New Releases</h3>
-    <div class="row g-4">
-
-      <!-- Movie Card -->
-      <div class="col-md-3">
-        <div class="movie-card">
-          <img src="https://m.media-amazon.com/images/I/71rNJQ2g-EL._AC_SY679_.jpg" alt="John Wick 4">
-          <div class="movie-overlay">
-            <div class="movie-title">John Wick 4</div>
-            <div class="movie-info">2023 · 170 mins · Action</div>
-            <button class="btn btn-primary btn-custom">▶ Play Now</button>
-            <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Movie Card -->
-      <div class="col-md-3">
-        <div class="movie-card">
-          <img src="https://m.media-amazon.com/images/I/81Uwb5p9eNL._AC_SY679_.jpg" alt="Spider Man Memo">
-          <div class="movie-overlay">
-            <div class="movie-title">Spider Man: Across the Spider-Verse</div>
-            <div class="movie-info">2022 · 145 mins · Animation</div>
-            <button class="btn btn-primary btn-custom">▶ Play Now</button>
-            <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Movie Card -->
-      <div class="col-md-3">
-        <div class="movie-card">
-          <img src="https://m.media-amazon.com/images/I/91TqW74Hn6L._AC_SY679_.jpg" alt="The White House">
-          <div class="movie-overlay">
-            <div class="movie-title">White House Down</div>
-            <div class="movie-info">2013 · 131 mins · Thriller</div>
-            <button class="btn btn-primary btn-custom">▶ Play Now</button>
-            <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Movie Card -->
-      <div class="col-md-3">
-        <div class="movie-card">
-          <img src="https://m.media-amazon.com/images/I/81uV+UeZr6L._AC_SY679_.jpg" alt="The Post">
-          <div class="movie-overlay">
-            <div class="movie-title">The Post</div>
-            <div class="movie-info">2017 · 116 mins · Drama</div>
-            <button class="btn btn-primary btn-custom">▶ Play Now</button>
-            <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
+     <div class="row g-4">
+                @foreach ($videos1 as $video)
+                    <div class="col-md-3">
+                        <div class="movie-card">
+                            <img src="{{$video->video_url}}" >
+                            <div class="movie-overlay">
+                                <div class="movie-title">{{ $video->title }}</div>
+                                <div class="movie-info">
+                                    price: {{ $video->price }} . distribution: {{ $video->distribution }} <br>
+                                    category: {{ optional($video->category)->name ?? 'No category' }}
+                                </div>
+                                <button onclick="window.location='{{ route('video.show', $video->id) }}'" class="btn btn-primary btn-custom">▶ Play Now</button>
+                                <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
   </div>
   @include('home2')
   <!-- Bootstrap JS -->

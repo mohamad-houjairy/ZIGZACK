@@ -32,7 +32,7 @@
     .sv-brand{
       display:flex; align-items:center; gap:.6rem;
       font-weight:800; letter-spacing:.2px; text-decoration:none;
-      color:#bfa9ff;
+      color:#7c5cff;
     }
     .sv-logo{
       width:34px;height:34px; display:grid; place-items:center;
@@ -42,8 +42,10 @@
     .navbar-nav .nav-link{
       color:#fff!important; opacity:.9; font-weight:500; padding:10px 12px;
       font-style: Bold; font-size: 16px; !important
+
     }
-    .navbar-nav .nav-link:hover{ opacity:1; }
+    .navbar-nav .nav-link:hover{ opacity:1;
+    color:#7c5cff !important; }
     .dropdown-toggle::after{ margin-left:.35rem; }
 
     /* show dropdown on hover (desktop) */
@@ -154,8 +156,16 @@
       width:9%; opacity:.75;
     }
     .carousel-indicators [data-bs-target]{
-      width:36px; height:4px; border-radius:999px; background:#3d3b59;
+  
+      width:36px;
+      height:4px;
+       border-radius:999px;
+        background:#3d3b59;
     }
+        .carousel-indicators{
+        position: absolute;
+    top: 550px;
+        }
     .carousel-indicators .active{ background: linear-gradient(90deg, var(--brand), var(--brand-2)); }
 
 
@@ -298,52 +308,45 @@
         <ul class="navbar-nav ms-3 me-auto">
           <!-- Home (simple) -->
           <li class="nav-item"><a class="nav-link active" href="{{ route('home') }}">Home</a></li>
-
-          <!-- Features (hover dropdown) -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Features</a>
-            <ul class="dropdown-menu mt-2">
-              <li><a class="dropdown-item" href="#">Popular</a></li>
-              <li><a class="dropdown-item" href="#">Trending</a></li>
-              <li><a class="dropdown-item" href="#">Top Rated</a></li>
-              <li><a class="dropdown-item" href="#">New Releases</a></li>
-            </ul>
-          </li>
-
-          <!-- Pages (hover dropdown) -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Pages</a>
-            <ul class="dropdown-menu mt-2">
-              <li><a class="dropdown-item" href="#">Pricing</a></li>
-              <li><a class="dropdown-item" href="#">About</a></li>
-              <li><a class="dropdown-item" href="#">Contact</a></li>
-              <li><a class="dropdown-item" href="#">FAQ</a></li>
-            </ul>
-          </li>
-
-          <!-- Blog (hover dropdown) -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Blog</a>
-            <ul class="dropdown-menu mt-2">
-              <li><a class="dropdown-item" href="#">Blog list</a></li>
-              <li><a class="dropdown-item" href="#">Blog Grid 4 columns</a></li>
-              <li><a class="dropdown-item" href="#">Blog Grid 3 columns</a></li>
-              <li><a class="dropdown-item" href="#">Single blog</a></li>
-            </ul>
-          </li>
+            <a class="nav-link " href="{{ route('video-index') }}" >Movies</a>
+            <a class="nav-link " href="{{ route('festival-index') }}" >Festivals</a>
+             <a class="nav-link " href="{{ route('watch-later') }}" >Favorites</a>
+             <a class="nav-link " href="{{ route('actor.index') }}" >Actors</a>
         </ul>
 
         <!-- Search, locale, user, subscribe -->
         <div class="d-flex align-items-center gap-3">
           <div class="sv-search-wrap d-none d-lg-block">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" class="form-control sv-search" placeholder="Find movies, TV shows and more">
+          <form action="{{ route('video-search') }}" method="GET" class="d-flex">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" name="q" class="form-control sv-search" placeholder="Find movies, TV shows and more">
+</form>
+
           </div>
 
           <a class="text-white-50 d-none d-lg-inline" href="#" title="Language"><i class="fa-solid fa-globe"></i> EN</a>
           <a class="text-white-50 d-none d-lg-inline" href="#" title="Account"><i class="fa-regular fa-user"></i></a>
+<button onclick="location.href='{{ route('plan') }}'" class="sv-subscribe">Subscribe</button>
+   @if(Auth::check())
+                    {{-- User is logged in --}}
 
-          <button onclick="location.href='{{ route('plan') }}'" class="sv-subscribe">Subscribe</button>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-light">
+                                Log Out
+                            </button>
+                        </form>
+
+                @else
+                    {{-- User is not logged in --}}
+
+                        <a href="{{ route('login') }}" class="btn btn-outline-light">
+                            Log In
+                        </a>
+
+                @endif
+
         </div>
       </div>
     </div>

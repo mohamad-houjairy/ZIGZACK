@@ -60,96 +60,60 @@
     <!-- Profile Image & Info -->
     <div class="col-md-3">
       <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Actor" class="profile-img mb-3">
-      <div class="social-icons">
+
+
+      <div class="personal-info mt-4">
+        <p><span>Name</span>{{ $actor->name }}</p>
+        <p><span>Birthday</span> {{ $actor->birth_date }}</p>
+      </div>
+            <div class="social-icons">
         <a href="#"><i class="bi bi-facebook"></i></a>
         <a href="#"><i class="bi bi-google"></i></a>
         <a href="#"><i class="bi bi-twitter"></i></a>
         <a href="#"><i class="bi bi-linkedin"></i></a>
         <a href="#"><i class="bi bi-pinterest"></i></a>
       </div>
-
-      <div class="personal-info mt-4">
-        <p><span>Known for</span> Acting</p>
-        <p><span>Gender</span> Female</p>
-        <p><span>Birthday</span> June 15, 1995</p>
-        <p><span>Place of Birth</span> Japan</p>
-        <p><span>Also Known As</span> Jhon Witch</p>
-      </div>
     </div>
 
     <!-- Biography & Movies -->
     <div class="col-md-9">
-      <h3>David Horovitch</h3>
+      <h3>{{ $actor->name }}</h3>
+
+
+
+      <div class="d-flex flex-wrap">
+
       <p>
-        Amet luctus venenatis lectus magna fringilla urna porttitor. Massa sed elementum tempus egestas.
-        Sit amet volutpat consequat mauris nunc. Imperdiet sed euismod nisi porta lorem.
+        {{ $actor->bio }}
         <span id="dots">...</span><span id="more" style="display: none;"> Pellentesque elit eget gravida cum.
         Arou euismod quis viverra nibh cras pulvinar mattis nunc. Sed elementum tempus egestas sed sed risus pretium quam vulputate.</span>
         <button onclick="toggleReadMore()" class="btn btn-link text-decoration-none p-0">Show More</button>
       </p>
 
-      <h5 class="mt-4">Known for</h5>
-      <div class="d-flex flex-wrap">
-        <div class="movie-card me-3 mb-3">
-          <img src="https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg" width="120" alt="Day Dreamers">
-          <p class="mt-2">Day Dreamers</p>
-        </div>
-        <div class="movie-card me-3 mb-3">
-          <img src="https://m.media-amazon.com/images/I/81niIXK1c+L._AC_SY679_.jpg" width="120" alt="True Blood">
-          <p class="mt-2">True Blood</p>
-        </div>
-        <div class="movie-card me-3 mb-3">
-          <img src="https://m.media-amazon.com/images/I/71nHhaZ-V6L._AC_SY679_.jpg" width="120" alt="Family of Five">
-          <p class="mt-2">Family of Five</p>
-        </div>
-        <div class="movie-card me-3 mb-3">
-          <img src="https://m.media-amazon.com/images/I/71Zz2efCq8L._AC_SY679_.jpg" width="120" alt="The Baker">
-          <p class="mt-2">The Baker</p>
-        </div>
-        <div class="movie-card me-3 mb-3">
-          <img src="https://m.media-amazon.com/images/I/81Zz8bQk1CL._AC_SY679_.jpg" width="120" alt="Fireworks">
-          <p class="mt-2">Fireworks Wednesday</p>
-        </div>
-      </div>
+
+</div>
 
       <!-- Category Tabs -->
-      <div class="mt-4">
-        <span class="badge-custom active">All</span>
-        <span class="badge-custom">TV Shows</span>
-        <span class="badge-custom">Movies</span>
-      </div>
+
 
       <!-- Accordion -->
       <div class="accordion mt-3" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-              2022 - The Baker (Editing)
-            </button>
+<h4 class=" text-center p-2">Movies</h4>
+
+        @foreach ($actor->videos as $video)
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ $video->id }}">
+              <button onclick="location.href='{{ route('video.show', $video->id) }}'"  class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $video->id }}">
+                 {{ $video->title }} - {{ $video->distribution }}
+              </button>
           </h2>
 
         </div>
 
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-              2017 - Killer Design (Editing)
-            </button>
-          </h2>
-
-        </div>
-
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-              2022 - My Faithful Dog (Costume & Make-Up)
-            </button>
-          </h2>
-        
-        </div>
+@endforeach
       </div>
 
-    </div>
+
   </div>
 </div>
 

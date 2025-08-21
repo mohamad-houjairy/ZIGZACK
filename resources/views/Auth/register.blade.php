@@ -44,23 +44,49 @@
 <div class="auth-container">
   <div class="auth-box">
     <h3>Sign Up</h3>
-    <form>
+        {{-- Success / Error Messages --}}
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
+    {{-- Validation Errors --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <form action="{{ route('register1') }}" method="POST">
+      @csrf
       <div class="mb-3">
         <label>Full Name</label>
-        <input type="text" class="form-control bg-dark text-white" placeholder="Enter your name" required>
+        <input type="text" class="form-control bg-dark text-white" name="name" placeholder="Enter your name" required>
       </div>
       <div class="mb-3">
         <label>Email</label>
-        <input type="email" class="form-control bg-dark text-white" placeholder="Enter your email" required>
+        <input type="email" class="form-control bg-dark text-white" name="email" placeholder="Enter your email" required>
       </div>
       <div class="mb-3">
         <label>Password</label>
-        <input type="password" class="form-control bg-dark text-white" placeholder="Enter your password" required>
+        <input type="password" class="form-control bg-dark text-white" name="password" placeholder="Enter your password" required>
       </div>
       <div class="mb-3">
         <label>Confirm Password</label>
-        <input type="password" class="form-control bg-dark text-white" placeholder="Confirm your password" required>
+        <input type="password" class="form-control bg-dark text-white" name="password_confirmation" placeholder="Confirm your password" required>
       </div>
+      <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select class="form-select" id="role" name="role" required>
+                <option value="user">user</option>
+                <option value="content_creator"> content_creator</option>
+            </select>
+        </div>
       <button type="submit" class="btn btn-custom">Sign Up</button>
     </form>
     <p class="text-center mt-3">Already have an account?

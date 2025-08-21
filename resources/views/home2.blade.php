@@ -226,126 +226,37 @@
   </style>
 </head>
 <body>
-  <section class="tv-series-section container-fluid">
+  <section class="tv-series-section container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2 class="tv-series-header">TV Series</h2>
-      <div class="series-filter">
-        <span class="active" data-filter="today">Today</span>
-        <span data-filter="week">This week</span>
-        <span data-filter="month">This month</span>
-        <a href="{{ route('festivals.index') }}" data-filter="months">View All ></a>
-      </div>
+        <h2 class="tv-series-header">Festivals</h2>
+        <div class="series-filter">
+            <a href="{{ route('festival-index') }}" data-filter="months">View All ></a>
+        </div>
     </div>
-  <div class="series-cards">
 
-  <a href="details1.html" class="text-decoration-none text-white">
-    <div class="card-series large" role="img" aria-label="Water drop creating ripples in water">
-      <div class="card-img-container">
-        <img src="https://placehold.co/600x338?text=Water+Ripple+Closeup&font=roboto"
-             alt="Closeup photo of water drop creating circular ripples on a dark background" />
-      </div>
-      <div class="card-content">
-        <h6>Falling Water</h6>
-        <p>2 Seasons</p>
-      </div>
+    <div class="row g-4">
+        @foreach ($festivals as $index => $festival)
+            <div class="
+                @if ($index == 0) col-12 col-md-6 col-lg-6 @else col-6 col-md-4 col-lg-3 @endif
+            ">
+                <a href="{{ route('festival.show', $festival->id) }}" class="text-decoration-none text-white">
+                    <div class="card-series h-100 {{ $index == 0 ? 'featured-card' : '' }}">
+                        <div class="card-img-container mb-2">
+                            <img src="{{ optional($festival->video)->video_url ?? 'https://via.placeholder.com/400x400' }}"
+                                 alt="{{ optional($festival->video)->title ?? 'No category' }}"
+                                 class="img-fluid rounded">
+                        </div>
+                        <div class="card-content">
+                            <h6>{{ optional($festival->video)->title ?? 'No category' }}</h6>
+                            <p>Start on {{ $festival->starting_date }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        @endforeach
     </div>
-  </a>
+</section>
 
-  <a href="details2.html" class="text-decoration-none text-white">
-    <div class="card-series" role="img" aria-label="Collage of soldier scenes with focus frames">
-      <div class="card-img-container">
-        <img src="https://placehold.co/280x158?text=Unstoppable+Soldier&font=roboto"
-             alt="Collage image of soldiers and military equipment with highlight frames" />
-      </div>
-      <div class="card-content">
-        <h6>The Unstoppable Soldier</h6>
-        <p>1 Season</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="details3.html" class="text-decoration-none text-white">
-    <div class="card-series" role="img" aria-label="Black and white portrait of a woman and a man">
-      <div class="card-img-container">
-        <img src="https://placehold.co/280x158?text=Political+Animal&font=roboto"
-             alt="Black and white photo of a woman and a man looking serious" />
-      </div>
-      <div class="card-content">
-        <h6>Political Animal</h6>
-        <p>3 Seasons</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="details4.html" class="text-decoration-none text-white">
-    <div class="card-series" role="img" aria-label="Blurred train station clock with fast motion">
-      <div class="card-img-container">
-        <img src="https://placehold.co/280x158?text=The+Wasted+Times&font=roboto"
-             alt="Blurred image of a train station platform with a clock in focus" />
-      </div>
-      <div class="card-content">
-        <h6>The Wasted Times</h6>
-        <p>2 Seasons</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="details5.html" class="text-decoration-none text-white">
-    <div class="card-series" role="img" aria-label="Bright fireworks exploding in the night sky">
-      <div class="card-img-container">
-        <img src="https://placehold.co/280x158?text=Fireworks+Wednesday&font=roboto"
-             alt="Colorful fireworks exploding luminously against dark night sky" />
-      </div>
-      <div class="card-content">
-        <h6>Fireworks Wednesday</h6>
-        <p>1 Season</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="{{ route('festivals.index') }}" class="text-decoration-none text-white">
-    <div class="card-series" role="img" aria-label="Person gripping a tree in a dark forest">
-      <div class="card-img-container">
-        <img src="https://placehold.co/280x158?text=Zoombies+Game&font=roboto"
-             alt="A person gripping a tree trunk in a dark, wooded forest" />
-      </div>
-      <div class="card-content">
-        <h6>Zoombies Game</h6>
-        <p>1 Season</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="details7.html" class="text-decoration-none text-white">
-    <div class="card-series" role="img" aria-label="Yellow caution sign with shark silhouette in dark environment">
-      <div class="card-img-container">
-        <img src="https://placehold.co/280x158?text=Shark+Hunters&font=roboto"
-             alt="Yellow triangular warning sign with shark silhouette on a dark background" />
-      </div>
-      <div class="card-content">
-        <h6>Shark Hunters</h6>
-        <p>1 Season</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="details8.html" class="text-decoration-none text-white">
-    <div class="card-series" role="img" aria-label="Yellow caution sign with shark silhouette in dark environment">
-      <div class="card-img-container">
-        <img src="https://placehold.co/280x158?text=Shark+Hunters&font=roboto"
-             alt="Yellow triangular warning sign with shark silhouette on a dark background" />
-      </div>
-      <div class="card-content">
-        <h6>Shark Hunters</h6>
-        <p>1 Season</p>
-      </div>
-    </div>
-  </a>
-
-</div>
-
-
-  </section>
 
   <section class="main-banner container-fluid">
     <img
@@ -364,40 +275,20 @@
   </section>
 
   <button id="scrollTopBtn" aria-label="Scroll to top">&#8679;</button>
-<div class="top-artists ">
-    <a href="{{{ route('actor-info' )}}}" class="artist" >
-        <img src="alaya-pacheco.jpg" alt="Alaya Pacheco">
-        <div class="name">Alaya Pacheco</div>
-    </a>
-    <a href="actor-info.html" class="artist">
-        <img src="sarah-neal.jpg" alt="Sarah Neal">
-        <div class="name">Sarah Neal</div>
-    </a>
-    <a href="actor-info.html" class="artist">
-        <img src="emma-narburgh.jpg" alt="Emma Narburgh">
-        <div class="name">Emma Narburgh</div>
-    </a>
-    <a href="actor-info.html" class="artist">
-        <img src="richard-cant.jpg" alt="Richard Cant">
-        <div class="name">Richard Cant</div>
-    </a>
-    <a href="actor-info.html" class="artist">
-        <img src="david-horovitch.jpg" alt="David Horovitch">
-        <div class="name">David Horovitch</div>
-    </a>
-    <a href="actor-info.html" class="artist">
-        <img src="emily-carey.jpg" alt="Emily Carey">
-        <div class="name">Emily Carey</div>
-    </a>
-    <a href="actor-info.html" class="artist">
-        <img src="harry-styles.jpg" alt="Harry Styles">
-        <div class="name">Harry Styles</div>
-    </a>
-    <a href="actor-info.html" class="artist">
-        <img src="jefferson-hall.jpg" alt="Jefferson Hall">
-        <div class="name">Jefferson Hall</div>
-    </a>
+      <div class="py-3"> <h2 class="text-center">Top Artists</h2></div>
+<div class="container py-4">
+    <div class="row g-4">
+        @foreach($actors as $actor)
+            <div class="col-6 col-md-3 col-lg-2">
+                <a href="{{ route('actor.show', $actor->id) }}" class="artist text-center d-block">
+                    <img src="{{ $actor->image_url }}" alt="{{ $actor->name }}" class="img-fluid rounded-circle mb-2">
+                    <div class="name">{{ $actor->name }}</div>
+                </a>
+            </div>
+        @endforeach
+    </div>
 </div>
+
 
 <script>
   // Scroll to top button behavior

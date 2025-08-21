@@ -43,20 +43,38 @@
 <div class="auth-container">
   <div class="auth-box">
     <h3>Login</h3>
-    <form>
+    @if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+@if (session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+
+{{-- Validation Errors --}}
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+    <form action="{{ route('authenticate') }}" method="POST">
+      @csrf
       <div class="mb-3">
         <label>Email</label>
-        <input type="email" class="form-control bg-dark text-white" placeholder="Enter your email" required>
+        <input type="email" class="form-control bg-dark text-white" name="email" placeholder="Enter your email" required>
       </div>
       <div class="mb-3">
         <label>Password</label>
-        <input type="password" class="form-control bg-dark text-white" placeholder="Enter your password" required>
+        <input type="password" class="form-control bg-dark text-white" name="password" placeholder="Enter your password" required>
       </div>
       <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="rememberMe">
         <label class="form-check-label" for="rememberMe">Remember Me</label>
       </div>
-      <button type="submit" class="btn btn-custom">Login</button>
+      <button  type="submit" class="btn btn-custom">Login</button>
     </form>
     <p class="text-center mt-3">
       Don’t have an account? <a href="{{ route('register') }}">Sign Up</a><br>

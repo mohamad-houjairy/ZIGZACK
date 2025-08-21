@@ -56,23 +56,23 @@
     <h2 class="festival-title">🎉 Summer Music Festival 2025</h2>
 
     <!-- Festival Info -->
-    <div class="festival-info"><strong>📅 Dates:</strong> Aug 20, 2025 – Aug 25, 2025</div>
-    <div class="festival-info"><strong>📍 Location:</strong> Central Park, New York</div>
-    <div class="festival-info"><strong>🌍 Coordinates:</strong> 40.785091, -73.968285</div>
-    <div class="festival-info"><strong>👤 Organizer:</strong> John Smith</div>
-    <div class="festival-info"><strong>📞 Phone:</strong> +1 234 567 890</div>
+    <div class="festival-info"><strong>📅 Dates:</strong> {{ $festival->starting_date }} – {{ $festival->ending_date }}</div>
+    <div class="festival-info"><strong>📍 Location:</strong> {{ $festival->location }}</div>
+    <div class="festival-info"><strong>🌍 Coordinates:</strong> {{ $festival->latitude }}, {{ $festival->longitude }}</div>
+    <div class="festival-info"><strong>👤 Organizer:</strong> {{ $festival->organizer_name }}</div>
+    <div class="festival-info"><strong>📞 Phone:</strong> {{ $festival->organizer_phone }}</div>
 
     <!-- Example Video -->
     <div class="festival-info text-center">
       <strong>🎬 Featured Video:</strong><br>
       <video width="100%" controls>
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        <source src="{{ optional($festival->video)->video_url }}" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
 
     <div class="text-center mt-4">
-      <a href="festivals.html" class="btn-custom">⬅ Back to Festivals</a>
+      <a href="{{ route('festival-index') }}" class="btn-custom">⬅ Back to Festivals</a>
     </div>
   </div>
 

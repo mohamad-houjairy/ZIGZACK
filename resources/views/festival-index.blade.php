@@ -29,54 +29,46 @@
   <div class="container py-5 my-5">
     <h2 class="text-center mb-4">🎉 Upcoming Festivals</h2>
     <div class="row g-4">
-
+@foreach ($festivals as $festival)
       <!-- Festival 1 -->
-      <div class="col-md-4">
-        <a href="festival-details.html" class="text-decoration-none text-white">
-          <div class="card festival-card bg-dark">
-            <img src="https://placehold.co/600x400?text=Music+Festival" class="festival-img card-img-top" alt="Music Festival">
-            <div class="card-body">
-              <h5 class="card-title">Summer Beats Festival</h5>
-              <p class="festival-location"><i class="bi bi-geo-alt-fill"></i> Los Angeles, USA</p>
-              <p class="mb-1"><strong>Start:</strong> 2025-08-22</p>
-              <p class="mb-1"><strong>End:</strong> 2025-08-24</p>
-              <p><strong>Organizer:</strong> John Smith (📞 +1 555-123-456)</p>
-            </div>
-          </div>
-        </a>
+  <div class="col-md-4 mb-4">
+  <div class="card festival-card shadow-lg border-0 rounded-3 overflow-hidden h-100">
+    <!-- Festival Image -->
+    <div class="position-relative">
+      <img src="{{ optional($festival->video)->video_url ?? 'default-poster.jpg' }}"
+           class="card-img-top festival-img"
+           alt="{{ optional($festival->video)->title ?? 'No Title' }}">
+      <span class="badge bg-primary position-absolute top-0 start-0 m-2 px-3 py-2">
+        🎬 Festival
+      </span>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body bg-dark text-white d-flex flex-column">
+      <h5 class="card-title fw-bold">
+        {{ optional($festival->video)->title ?? 'No Title Available' }}
+      </h5>
+      <p class="text-muted small mb-2">
+        <i class="bi bi-geo-alt-fill"></i> {{ $festival->location }}
+      </p>
+
+      <div class="mb-3">
+        <p class="mb-1"><strong>Start:</strong> {{ $festival->starting_date }}</p>
+        <p class="mb-1"><strong>End:</strong> {{ $festival->ending_date }}</p>
       </div>
 
-      <!-- Festival 2 -->
-      <div class="col-md-4">
-        <a href="festival-details.html" class="text-decoration-none text-white">
-          <div class="card festival-card bg-dark">
-            <img src="https://placehold.co/600x400?text=Film+Festival" class="festival-img card-img-top" alt="Film Festival">
-            <div class="card-body">
-              <h5 class="card-title">Cannes Film Festival</h5>
-              <p class="festival-location"><i class="bi bi-geo-alt-fill"></i> Cannes, France</p>
-              <p class="mb-1"><strong>Start:</strong> 2025-09-10</p>
-              <p class="mb-1"><strong>End:</strong> 2025-09-18</p>
-              <p><strong>Organizer:</strong> Festival Org (📞 +33 555-888-222)</p>
-            </div>
-          </div>
+      <!-- CTA Button -->
+      <div class="mt-auto text-center">
+        <a href="{{ route('festival.show', $festival->id) }}" class="btn btn-primary w-100 rounded-pill">
+          ▶ View Details
         </a>
       </div>
+    </div>
+  </div>
+</div>
 
-      <!-- Festival 3 -->
-      <div class="col-md-4">
-        <a href="festival-details.html" class="text-decoration-none text-white">
-          <div class="card festival-card bg-dark">
-            <img src="https://placehold.co/600x400?text=Food+Festival" class="festival-img card-img-top" alt="Food Festival">
-            <div class="card-body">
-              <h5 class="card-title">World Food Carnival</h5>
-              <p class="festival-location"><i class="bi bi-geo-alt-fill"></i> Tokyo, Japan</p>
-              <p class="mb-1"><strong>Start:</strong> 2025-10-05</p>
-              <p class="mb-1"><strong>End:</strong> 2025-10-08</p>
-              <p><strong>Organizer:</strong> Yuki Tanaka (📞 +81 90-1234-5678)</p>
-            </div>
-          </div>
-        </a>
-      </div>
+
+@endforeach
 
     </div>
   </div>

@@ -17,11 +17,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+protected $fillable = ['name', 'email', 'password', 'role'];
+
 public function contentCreator()
     {
         return $this->hasOne(ContentCreator::class);
