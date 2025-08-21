@@ -1,7 +1,23 @@
+
 @extends('share')
 
 @section('content')
+
+
 <div class="row py-5 my-5">
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show my-5" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show my-5" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 <div class="col-md-3 ">
 
         <!-- Sidebar -->
@@ -55,8 +71,24 @@
                                     price: {{ $video->price }} . distribution: {{ $video->distribution }} <br>
                                     category: {{ optional($video->category)->name ?? 'No category' }}
                                 </div>
-                                <button onclick="window.location='{{ route('video.show', $video->id) }}'" class="btn btn-primary btn-custom">▶ Play Now</button>
-                                <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
+
+<div class="d-flex flex-column align-items-start gap-2">
+    <!-- Play Button -->
+    <a href="{{ route('video.show', $video->id) }}" class="btn btn-primary btn-custom w-100">
+        ▶ Play Now
+    </a>
+
+    <!-- Add to Favorites Form -->
+    <form action="{{ route('favorite.add', $video->id) }}" method="POST" class="w-100">
+        @csrf
+        <input type="hidden" name="video_id" value="{{ $video->id }}">
+        <button type="submit" class="btn btn-outline-warning btn-custom w-100">
+            + Watch Later
+        </button>
+    </form>
+</div>
+
+
                             </div>
                         </div>
                     </div>
@@ -66,4 +98,13 @@
     </div>
 </div>
 </div>
+<script>
+    setTimeout(() => {
+        let alert = document.querySelector('.alert');
+        if (alert) {
+            alert.remove();
+        }
+    }, 3000); // 3 seconds
+</script>
+
 @endsection

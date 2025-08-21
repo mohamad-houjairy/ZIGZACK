@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Video;
 use App\Models\Actor;
 use App\Models\FestivalVideo;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ContentCreator;
 
 class VideoController extends Controller
 {
@@ -57,20 +59,54 @@ $count = $videos->count();
         $video->delete();
         return response()->json(['message' => 'Video deleted successfully']);
     }
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'video_url' => 'required|url',
-            'creator_id' => 'required|exists:content_creators,id',
-            'category_id' => 'required|exists:categories,id',
-        ]);
+public function store(Request $request)
+{
+    $user = Auth::user();
 
-        $video = Video::create($validatedData);
-
-        return response()->json(['message' => 'Video created successfully', 'video' => $video], 201);
+    // Only admin or content creators can add movies
+    if (!in_array($user->role, ['admin', 'content_creator'])) {
+        return redirect()->back()->with('error', '❌ You are not authorized to add movies.');
     }
+
+    // Convert comma-separated actors string to array
+    if ($request->has('actors')) {
+        $request->merge([
+            'actors' => array_filter(explode(',', $request->actors)) // remove empty values
+        ]);
+    }
+
+    $validated = $request->validate([
+        'title' => 'required|string|max:150',
+        'description' => 'nullable|string',
+        'video_url' => 'required|url',
+        'price' => 'nullable|numeric|min:0',
+        'distribution' => 'required|in:festival_only,public,library',
+        'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'production_year' => 'nullable|digits:4|integer|min:1900|max:' . date('Y'),
+        'duration' => 'nullable|string|max:50',
+        'category_id' => 'nullable|exists:categories,id',
+        'actors' => 'nullable|array',
+        'actors.*' => 'exists:actors,name', // match against name if you send names
+    ]);
+
+    // Upload picture if exists
+    if ($request->hasFile('picture')) {
+        $validated['picture'] = $request->file('picture')->store('thumbnails', 'public');
+    }
+
+    // Automatically set the content creator as the logged-in user
+    $validated['creator_id'] = $user->contentCreator?->id ?? null;
+
+    $movie = Video::create($validated);
+
+    // Attach actors if provided
+    if (!empty($validated['actors'])) {
+        $actorIds = Actor::whereIn('name', $validated['actors'])->pluck('id')->toArray();
+        $movie->actors()->sync($actorIds);
+    }
+
+    return redirect()->route('video-index')->with('success', '🎬 Movie added successfully!');
+}
 
 
     public function watchLater()
@@ -98,7 +134,14 @@ public function home()
     $actors = Actor::all()->take(6);
     $videos = Video::latest()->take(4)->get();
     $videos1 = Video::latest()->take(4)->get();
-    $festivals = FestivalVideo::latest()->take(7)->get();
+    $festivals = FestivalVideo::latest()->take(3)->get();
     return view('home', compact('actors', 'videos', 'videos1', 'festivals'));
 }
+public function create()
+{
+    $categories = Category::all();
+    $actors = Actor::all();
+    return view('create-video', compact('categories', 'actors'));
 }
+}
+

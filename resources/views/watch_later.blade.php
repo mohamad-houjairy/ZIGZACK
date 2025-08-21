@@ -56,38 +56,47 @@
     <div class="watchlater-box">
       <h3 class="text-center mb-4">📺 Watch Later</h3>
 
-      <div class="row g-4">
-        <!-- Example movie card -->
+  <div class="row g-4">
+    @foreach($favorites as $video)
         <div class="col-md-3 col-sm-6">
-          <div class="movie-card">
-            <img src="https://image.tmdb.org/t/p/w500/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg" alt="Movie Poster">
-            <div class="movie-info">
-              <h6>Inception</h6>
-              <form method="POST" action="#">
-                @csrf
-                <button type="submit" class="btn btn-remove">Remove</button>
-              </form>
+            <div class="card shadow-sm h-100 border-0 rounded-3">
+
+                <!-- Poster -->
+                <img src="{{ $video->picture ?? asset('images/default.jpg') }}"
+                     class="card-img-top rounded-top-3"
+                     alt="{{ $video->title }}"
+                     style="height: 220px; object-fit: cover;">
+
+                <!-- Card Body -->
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <h6 class="card-title text-truncate">{{ $video->title }}</h6>
+                </div>
+
+                <!-- Card Footer (Buttons) -->
+                <div class="card-footer bg-white border-0 d-flex justify-content-between gap-2">
+                    <!-- Play -->
+                    <a href="{{ route('video.show', $video->id) }}"
+                       class="btn btn-primary btn-sm flex-fill">
+                        ▶ Play Now
+                    </a>
+
+                    <!-- Remove -->
+                    <form method="POST"
+                          action="{{ route('favorite.destroy', $video->id) }}"
+                          onsubmit="return confirm('Are you sure you want to remove this from favorites?');"
+                          class="flex-fill">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm w-100">
+                            ✖ Remove
+                        </button>
+                    </form>
+                </div>
             </div>
-          </div>
         </div>
+    @endforeach
+</div>
 
-        <!-- Repeat dynamically for each saved movie -->
-
-          <div class="col-md-3 col-sm-6">
-            <div class="movie-card">
-              <img src="" alt="Movie Poster">
-              <div class="movie-info">
-                <h6>title</h6>
-                <form method="POST" action="">
-                  @csrf
-                  <button type="submit" class="btn btn-remove">Remove</button>
-                </form>
-              </div>
-            </div>
-          </div>
-
-
-      </div>
     </div>
   </div>
 </div>

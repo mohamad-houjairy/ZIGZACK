@@ -156,7 +156,7 @@
       width:9%; opacity:.75;
     }
     .carousel-indicators [data-bs-target]{
-  
+
       width:36px;
       height:4px;
        border-radius:999px;
@@ -310,7 +310,7 @@
           <li class="nav-item"><a class="nav-link active" href="{{ route('home') }}">Home</a></li>
             <a class="nav-link " href="{{ route('video-index') }}" >Movies</a>
             <a class="nav-link " href="{{ route('festival-index') }}" >Festivals</a>
-             <a class="nav-link " href="{{ route('watch-later') }}" >Favorites</a>
+             <a class="nav-link " href="{{ route('favorite') }}" >Favorites</a>
              <a class="nav-link " href="{{ route('actor.index') }}" >Actors</a>
         </ul>
 
@@ -337,7 +337,11 @@
                                 Log Out
                             </button>
                         </form>
+@if (Auth::user()->role === 'content_creator')
+                            {{-- Admin user --}}
+                            <a href="{{ route('video.create') }}" class="btn btn-outline-light">Add Movies</a>
 
+@endif
                 @else
                     {{-- User is not logged in --}}
 

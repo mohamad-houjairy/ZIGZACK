@@ -8,15 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Video extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'creator_id',
-        'category_id',
-        'title',
-        'description',
-        'video_url',
-        'price',
-        'distribution',
-    ];
+protected $fillable = [
+    'creator_id',
+    'category_id',
+    'title',
+    'description',
+    'video_url',
+    'price',
+    'distribution',
+    'picture',
+    'production_year',
+    'rating',
+    'views_count',
+    'duration',
+];
+
     public function creator()
     {
         return $this->belongsTo(ContentCreator::class, 'creator_id');

@@ -116,7 +116,11 @@
                                     category: {{ optional($video->category)->name ?? 'No category' }}
                                 </div>
                                 <button onclick="window.location='{{ route('video.show', $video->id) }}'" class="btn btn-primary btn-custom">▶ Play Now</button>
-                                <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
+      <form action="{{ route('favorite.add' , $video->id) }}" method="POST">
+    @csrf
+    <input type="hidden" name="video_id" value="{{ $video->id }}">
+         <button  class="btn btn-outline-light btn-custom">+ Watch Later</button>
+</form>
                             </div>
                         </div>
                     </div>

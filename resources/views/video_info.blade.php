@@ -100,7 +100,7 @@
   <div class="row">
     <!-- Poster + Buttons -->
     <div class="col-md-3">
-      <img src="https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg" alt="John Wick 4" class="movie-poster mb-3">
+      <img src="{{ $video->picture }}" alt="{{ $video->title }}" class="movie-poster mb-3">
 
       <div class="d-flex mb-3">
         <button class="btn btn-custom"><i class="bi bi-hand-thumbs-up"></i> Like</button>
@@ -114,11 +114,11 @@
     <div class="col-md-9">
       <h2>{{ $video->title }}</h2>
       <p class=" py-1">
-        <i class="bi bi-star-fill text-warning"></i> 8.2
-        <span class="ms-1">6266 Views</span>
-        <span class="ms-1">Released: {{ $video->release_date }}</span>
+        <i class="bi bi-star-fill text-warning"></i> {{ $video->rating }}
+        <span class="ms-1">{{ $video->views }} Views</span>
+        <span class="ms-1">Released: {{ $video->created_at->format('F d, Y') }}</span>
       </p>
-      <p class=" py-1"><span class="badge bg-secondary">2023</span> • 170 min • <span class="badge bg-danger">{{ $video->distribution }}</span></p>
+      <p class=" py-1"><span class="badge bg-secondary">{{ $video->production_year }}</span> • {{ $video->duration }} • <span class="badge bg-danger">{{ $video->distribution }}</span></p>
       <p class=" py-1"><span class="badge bg-info">Category: {{ optional($video->category)->name ?? 'No category' }}</span></p>
  <p class=" py-1"><h4><span class="badge bg-secondary">Price : {{$video->price}}$</span></h4></p>
       <p class=" py-1">
