@@ -45,4 +45,12 @@ public function festival()
         return $this->hasMany(Payment::class);
     }
 
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+    public function sliders()
+    {
+        return $this->hasMany(Slider::class);
+    }
 }

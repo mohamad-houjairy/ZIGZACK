@@ -60,5 +60,8 @@ public function contentCreator()
 {
   return $this->hasRole('admin') ;
 }
-
+public function favorites()
+{
+    return $this->hasMany(Favorite::class);
+}
 }
