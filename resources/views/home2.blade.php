@@ -228,7 +228,7 @@
 <body>
   <section class="tv-series-section container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="tv-series-header">Festivals</h2>
+        <div class="tv-series-header " style="font-size: xx-large">Festivals</div>
         <div class="series-filter">
             <a href="{{ route('festival-index') }}" data-filter="months">View All ></a>
         </div>
@@ -258,21 +258,6 @@
 </section>
 
 
-  <section class="main-banner container-fluid">
-    <img
-      src="https://placehold.co/1600x700?text=Pieces+of+Her+Netflix+Series+Banner&font=roboto"
-      alt="Promo banner for Pieces of Her: Close-up of serious woman and dimly lit characters on the side, dark moody background"
-    />
-    <div class="main-banner-content">
-      <small>A NETFLIX SERIES</small>
-      <h1>PIECES OF HER</h1>
-      <div class="d-flex align-items-center">
-        <span class="release-date">MARCH 4</span>
-        <span class="netflix-red">NETFLIX</span>
-      </div>
-      <a href="#!" class="btn btn-watch mt-3">Watch Trailer</a>
-    </div>
-  </section>
 
   <button id="scrollTopBtn" aria-label="Scroll to top">&#8679;</button>
       <div class="py-3"> <h2 class="text-center">Top Artists</h2></div>

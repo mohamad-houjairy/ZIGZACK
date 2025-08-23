@@ -293,17 +293,14 @@
   <!-- ======= NAVBAR ======= -->
   <nav class="navbar navbar-expand-lg sv-navbar fixed-top ">
     <div class="container-fluid">
-
       <a class="sv-brand" href="#">
         <span class="sv-logo">▶</span>
         <span>Streamvid</span>
         <small class="ms-1 opacity-75">TV</small>
       </a>
-
       <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#svNav">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="svNav">
         <ul class="navbar-nav ms-3 me-auto">
           <!-- Home (simple) -->
@@ -313,7 +310,6 @@
              <a class="nav-link " href="{{ route('favorite') }}" >Favorites</a>
              <a class="nav-link " href="{{ route('actor.index') }}" >Actors</a>
         </ul>
-
         <!-- Search, locale, user, subscribe -->
         <div class="d-flex align-items-center gap-3">
           <div class="sv-search-wrap d-none d-lg-block">
@@ -322,15 +318,12 @@
     <i class="fa-solid fa-magnifying-glass"></i>
     <input type="text" name="q" class="form-control sv-search" placeholder="Find movies, TV shows and more">
 </form>
-
           </div>
-
           <a class="text-white-50 d-none d-lg-inline" href="#" title="Language"><i class="fa-solid fa-globe"></i> EN</a>
-          <a class="text-white-50 d-none d-lg-inline" href="#" title="Account"><i class="fa-regular fa-user"></i></a>
+          <a class="text-white-50 d-none d-lg-inline" href="{{ route('profile.edit') }}" title="Account"><i class="fa-regular fa-user"></i></a>
 <button onclick="location.href='{{ route('plan') }}'" class="sv-subscribe">Subscribe</button>
    @if(Auth::check())
                     {{-- User is logged in --}}
-
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-outline-light">
@@ -344,32 +337,19 @@
 @endif
                 @else
                     {{-- User is not logged in --}}
-
                         <a href="{{ route('login') }}" class="btn btn-outline-light">
                             Log In
                         </a>
-
                 @endif
-
         </div>
       </div>
     </div>
   </nav>
   <div class="sv-spacer"></div>
-
-
-
-
 @yield('content')
-
-
-
-
-
 <footer class="footer">
     <div class="container">
       <div class="row">
-
         <!-- Logo + Social -->
         <div class="col-md-3 mb-4">
           <h4 class="fw-bold">

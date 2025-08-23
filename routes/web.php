@@ -32,12 +32,7 @@ Route::Post('/login', [AuthController::class, 'login'])->name('authenticate');
 Route::get('/register', [AuthController::class, 'enter1'])->name('register');
 Route::Post('/register', [AuthController::class, 'register'])->name('register1');
 Route::get('/reset-password', [AuthController::class, 'enterResetPassword'])->name('reset-password');
-// Route::get('/test', [AuthController::class, 'test'])->name('test');
 Route::get('/', [VideoController::class, 'home'])->name('home');
-
-
-// Route::get('/festivals', [FestivalController::class, 'index'])->name('festivals.index');
-// Route::get('/festivals/{id}', [FestivalController::class, 'show'])->name('festivals.show');
 Route::get('/plan', [SubscriptionController::class, 'plan'])->name('plan');
 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 ///////////////////////////////////// VIDEO////////////////////////////////////////////////////////////////////
@@ -56,6 +51,9 @@ Route::get('/actor/{id}', [ActorController::class, 'show'])->name('actor.show');
 ///////////////////////////////////// SEARCH////////////////////////////////////////////////////////////////////
 Route::get('/search', [SearchController::class, 'search'])->name('video-search');
 ///////////////////////////////////// Favorit////////////////////////////////////////////////////////////////////
-Route::get('/favorite', [FavoritController::class, 'index'])->name('favorite');
+Route::get('/favorite', [FavoritController::class, 'index'])->name('favorite')->middleware('auth');
 Route::post('/favorite/{videoId}', [FavoritController::class, 'store'])->name('favorite.add')->middleware('auth');
 Route::delete('/favorite/{id}', [FavoritController::class, 'destroy'])->name('favorite.destroy')->middleware('auth');
+///////////////////////////////////// PROFILE////////////////////////////////////////////////////////////////////
+Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit')->middleware('auth');
+Route::post('/profile', [UserController::class, 'update'])->name('profile.update')->middleware('auth');

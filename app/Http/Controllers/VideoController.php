@@ -9,6 +9,7 @@ use App\Models\Actor;
 use App\Models\FestivalVideo;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContentCreator;
+use App\Models\Slider;
 
 class VideoController extends Controller
 {
@@ -135,7 +136,10 @@ public function home()
     $videos = Video::latest()->take(4)->get();
     $videos1 = Video::latest()->take(4)->get();
     $festivals = FestivalVideo::latest()->take(3)->get();
-    return view('home', compact('actors', 'videos', 'videos1', 'festivals'));
+   $sliders = Slider::with('video')
+                     ->orderBy('position', 'asc')
+                     ->get();
+    return view('home', compact('actors', 'videos', 'videos1', 'festivals', 'sliders'));
 }
 public function create()
 {

@@ -8,15 +8,19 @@ use App\Filament\Widgets\DashboardStats;
 
 class FilamentServiceProvider extends ServiceProvider
 {
-    public function register(): void
-    {
-        //
-    }
 
-    public function boot(): void
-    {
-        Filament::registerWidgets([
-            DashboardStats::class,
-        ]);
-    }
+public function boot(): void
+{
+    Filament::registerWidgets([
+        DashboardStats::class,
+    ]);
+
+    // Restrict panel access
+    Filament::serving(function () {
+        if (!in_array(auth()->user()?->role, ['admin'])) {
+            abort(403);
+        }
+    });
+}
+
 }

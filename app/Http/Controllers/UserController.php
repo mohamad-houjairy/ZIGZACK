@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ContentCreator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
     public function index()
     {
         $users = User::all();
@@ -23,15 +27,55 @@ class UserController extends Controller
         }
         return response()->json($user);
     }
-    public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+public function update(Request $request)
+{
+    $user = Auth::user(); // Authenticated user (Eloquent model)
+
+    $validated = $request->validate([
+        'name'  => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    // Handle image upload
+    if ($request->hasFile('image')) {
+        // Delete old image if it exists
+        if ($user->image) {
+            Storage::disk('public')->delete($user->image);
         }
-        $user->update($request->all());
-        return response()->json($user);
+        // Store new image
+        $validated['image'] = $request->file('image')->store('profile_images', 'public');
     }
+
+
+/** @var \App\Models\User $user */
+$user = Auth::user();
+
+$user->update($validated);
+if ($user->role === 'content_creator') {
+        $validatedCreator = $request->validate([
+            'bio' => 'nullable|string|max:1000',
+            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Handle creator profile image
+        if ($request->hasFile('profile_image')) {
+            if ($user->contentCreator && $user->contentCreator->profile_image) {
+                Storage::disk('public')->delete($user->contentCreator->profile_image);
+            }
+            $validatedCreator['profile_image'] = $request->file('profile_image')->store('creator_profiles', 'public');
+        }
+
+        ContentCreator::updateOrCreate(
+            ['user_id' => $user->id],
+            $validatedCreator
+        );
+    }
+
+    return redirect()
+        ->route('profile.edit')
+        ->with('success', '✅ Profile updated successfully.');
+}
     public function destroy($id)
     {
         $user = User::findOrFail($id);
@@ -47,6 +91,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'image' => 'nullable|image|max:2048',
         ]);
 
         $user = User::create([
@@ -56,6 +101,11 @@ class UserController extends Controller
         ]);
 
         return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
+    }
+    public function edit()
+    {
+        $user = auth()->user();
+        return view('profile-edit', compact('user'));
     }
 
 }

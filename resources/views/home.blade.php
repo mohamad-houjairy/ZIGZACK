@@ -14,7 +14,7 @@
     {{-- Success message --}}
   @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show fixed-top m-3" role="alert" style="z-index: 1055;">
-        {{ session('success') }}    Welcome, {{ Auth::user()->name }}!
+        {{ session('success') }}    Welcome, {{ Auth::user()->name ?? '' }}!
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
        <script>
@@ -31,42 +31,41 @@
 
 
       <!-- Slide 1 -->
-      <div class="carousel-item active" style="background-image:url('https://image.tmdb.org/t/p/original/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg');">
+     <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    @foreach($sliders as $key => $slider)
+      @php
+        $video = $slider->video;
+      @endphp
+      <div class="carousel-item @if($key == 0) active @endif"
+           style="background-image: url('{{ $video->picture }}'); background-size: cover; background-position: center;">
         <div class="sv-caption">
-          <div class="sv-kicker text-uppercase">Action, Crime, Thriller</div>
-          <h1 class="sv-title">John Wick 4</h1>
+          <div class="sv-kicker text-uppercase">{{ $video->category?->name ?? 'No Category' }}</div>
+          <h1 class="sv-title">{{ $video->title }}</h1>
           <div class="sv-meta mb-3">
-            <i class="fa fa-star text-warning me-1"></i> 8.2
-            <span class="mx-2">•</span> 2023
-            <span class="mx-2">•</span> 170 mins
+            <i class="fa fa-star text-warning me-1"></i> {{ $video->rating }}
+            <span class="mx-2">•</span> {{ $video->production_year }}
+            <span class="mx-2">•</span> {{ $video->duration }}
             <span class="mx-2">•</span> <span class="badge">TV-MA</span>
           </div>
-          <p class="text-white-50 mb-4">Enjoy exclusive Amazon Originals as well as popular movies and TV shows for USD 12.0/month. Watch now, cancel anytime.</p>
+          <p class="text-white-50 mb-4">{{ $video->description }}</p>
           <div class="d-flex gap-2">
-            <a href="{{ route('video-index') }}" class="sv-btn-primary"><i class="fa-solid fa-play"></i> Play Now</a>
-            <a href="#" class="sv-btn-ghost"><i class="fa-regular fa-bookmark"></i> Watch Later</a>
-          </div>
-        </div>
-      </div>
+            <a href="{{ route('video.show', $video->id) }}" class="sv-btn-primary">
+              <i class="fa-solid fa-play"></i> Play Now
+            </a>
+       <form action="{{ route('favorite.add', $video->id) }}" method="POST" class="d-flex justify-content-center mt-2">
+    @csrf
+    <input type="hidden" name="video_id" value="{{ $video->id }}">
+    <button type="submit" class="btn btn-outline-secondary btn-lg w-100 d-flex align-items-center justify-content-center gap-2">
+        <i class="fa-regular fa-bookmark"></i> Watch Later
+    </button>
+</form>
 
-      <!-- Slide 2 -->
-      <div class="carousel-item" style="background-image:url('https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg');">
-        <div class="sv-caption">
-          <div class="sv-kicker text-uppercase">Sci-Fi, Adventure</div>
-          <h1 class="sv-title">Avatar: The Way of Water</h1>
-          <div class="sv-meta mb-3">
-            <i class="fa fa-star text-warning me-1"></i> 7.8
-            <span class="mx-2">•</span> 2022
-            <span class="mx-2">•</span> 190 mins
-            <span class="mx-2">•</span> <span class="badge">PG-13</span>
-          </div>
-          <p class="text-white-50 mb-4">Return to Pandora and dive into an ocean of adventure. Watch in UHD and immerse yourself in the world of the Metkayina clan.</p>
-          <div class="d-flex gap-2">
-            <a href="#" class="sv-btn-primary"><i class="fa-solid fa-play"></i> Play Now</a>
-            <a href="#" class="sv-btn-ghost"><i class="fa-regular fa-bookmark"></i> Watch Later</a>
           </div>
         </div>
       </div>
+    @endforeach
+  </div>
 
     </div>
 
