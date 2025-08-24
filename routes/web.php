@@ -14,6 +14,7 @@ use App\Http\Controllers\FavoritController;
 use App\Models\Actor;
 use App\Models\Video;
 use App\Models\FestivalVideo;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,10 +29,11 @@ use App\Models\FestivalVideo;
 
 Route::Post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/login', [AuthController::class, 'enter'])->name('login');
-Route::Post('/login', [AuthController::class, 'login'])->name('authenticate');
+Route::Post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'enter1'])->name('register');
 Route::Post('/register', [AuthController::class, 'register'])->name('register1');
 Route::get('/reset-password', [AuthController::class, 'enterResetPassword'])->name('reset-password');
+Route::get('/home', [VideoController::class, 'home'])->name('home');
 Route::get('/', [VideoController::class, 'home'])->name('home');
 Route::get('/plan', [SubscriptionController::class, 'plan'])->name('plan');
 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
@@ -57,3 +59,7 @@ Route::delete('/favorite/{id}', [FavoritController::class, 'destroy'])->name('fa
 ///////////////////////////////////// PROFILE////////////////////////////////////////////////////////////////////
 Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit')->middleware('auth');
 Route::post('/profile', [UserController::class, 'update'])->name('profile.update')->middleware('auth');
+
+Auth::routes(['register' => false, 'reset' => true, 'verify' => false]);
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

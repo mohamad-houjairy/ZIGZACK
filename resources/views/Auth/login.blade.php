@@ -60,7 +60,7 @@
         </ul>
     </div>
 @endif
-    <form action="{{ route('authenticate') }}" method="POST">
+    <form action="{{ route('login') }}" method="POST">
       @csrf
       <div class="mb-3">
         <label>Email</label>
@@ -78,7 +78,7 @@
     </form>
     <p class="text-center mt-3">
       Don’t have an account? <a href="{{ route('register') }}">Sign Up</a><br>
-      <a href="{{ route('reset-password') }}">Forgot Password?</a>
+      <a href="{{ route('password.request') }}">Forgot Password?</a>
     </p>
   </div>
 </div>
