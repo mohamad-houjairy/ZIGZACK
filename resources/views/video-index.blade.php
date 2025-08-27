@@ -64,7 +64,11 @@
                 @foreach ($videos as $video)
                     <div class="col-md-3">
                         <div class="movie-card">
-                            <img src="{{$video->video_url}}" >
+                     
+    <img src="{{ asset('images/' . $video->picture) }}"
+         alt="{{ $video->title }}"
+         class="movie-poster mb-3">
+
                             <div class="movie-overlay">
                                 <div class="movie-title">{{ $video->title }}</div>
                                 <div class="movie-info">

@@ -45,8 +45,16 @@ class VideoResource extends Resource
                         'public' => 'Public',
                         'festival_only' => 'Festival Only',
                         'library' => 'Library'
-                    ])
-                    ->required(),
+                    ]),
+Forms\Components\FileUpload::make('picture')
+                    ->image()
+                    ->directory('thumbnails')
+                    ->disk('public'),
+                Forms\Components\TextInput::make('actors')
+                    ->helperText('Enter actor names separated by commas')
+                    ->placeholder('Actor1, Actor2, Actor3'),
+
+
             ])->columns(2);
 
     }
@@ -60,6 +68,9 @@ class VideoResource extends Resource
                 Tables\Columns\TextColumn::make('video_url'),
                 Tables\Columns\TextColumn::make('creator_id'),
                 Tables\Columns\TextColumn::make('category_id'),
+                Tables\Columns\TextColumn::make('picture'),
+                Tables\Columns\TextColumn::make('actors'),
+
             ])
             ->filters([
                 //

@@ -15,8 +15,8 @@
       --card:#12122a;
       --text:#ffffff;
       --muted:#b9b9c7;
-      --brand:#7c5cff;   /* purple used for borders/brand */
-      --brand-2:#a585ff; /* lighter for gradient */
+      --brand:#7c5cff;
+      --brand-2:#a585ff;
     }
 
     body{ background:var(--bg); color:var(--text); }
@@ -35,25 +35,20 @@
       color:#7c5cff;
     }
     .sv-logo{
-      width:34px;height:34px; display:grid; place-items:center;
-      background: radial-gradient(100% 100% at 30% 20%, var(--brand-2), var(--brand));
+      width:44px;height:44px; display:grid; place-items:center;
       border-radius:10px; color:#fff; font-weight:900;
     }
     .navbar-nav .nav-link{
       color:#fff!important; opacity:.9; font-weight:500; padding:10px 12px;
-      font-style: Bold; font-size: 16px; !important
-
+      font-style: Bold; font-size: 16px;
     }
-    .navbar-nav .nav-link:hover{ opacity:1;
-    color:#7c5cff !important; }
+    .navbar-nav .nav-link:hover{ opacity:1; color:#7c5cff !important; }
     .dropdown-toggle::after{ margin-left:.35rem; }
 
-    /* show dropdown on hover (desktop) */
     @media (min-width: 992px){
       .dropdown:hover>.dropdown-menu{ display:block; }
     }
 
-    /* dropdown menu styling with colored border */
     .dropdown-menu{
       background: rgba(18,18,42,.96);
       border: 1.5px solid var(--brand);
@@ -110,22 +105,18 @@
       height: min(100vh, 600px);
       position:relative;
       background-size:cover; background-position:center;
+      z-index: 1; /* ensure hero is behind footer */
     }
-    /* dark gradient overlay from left */
     .sv-hero .carousel-item::after{
       content:""; position:absolute; inset:0;
       background:
         linear-gradient(90deg, rgba(11,11,26,.9) 0%, rgba(11,11,26,.7) 35%, rgba(11,11,26,.25) 60%, rgba(11,11,26,0) 100%);
+      z-index: 2;
     }
+
     .sv-caption{
       position:absolute; z-index:5; left:6vw; bottom: 18vh; max-width: 640px;
     }
-    .sv-kicker{
-      color:#bfa9ff; font-weight:800; letter-spacing:.8px; font-size:.85rem;
-    }
-    .sv-title{ font-size: clamp(34px, 5vw, 62px); font-weight:800; margin:.35rem 0 1rem; }
-    .sv-meta{ color: var(--muted); font-weight:600; }
-    .sv-meta .badge{ background:#2a2844; border:1px solid rgba(255,255,255,.14); }
 
     /* buttons */
     .sv-btn-primary{
@@ -149,321 +140,337 @@
       transform: translateY(-2px);
     }
 
-    /* carousel controls & indicators */
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon{ filter: invert(1) grayscale(1); }
-    .carousel-control-prev, .carousel-control-next{
-      width:9%; opacity:.75;
-    }
-    .carousel-indicators [data-bs-target]{
-
-      width:36px;
-      height:4px;
-       border-radius:999px;
-        background:#3d3b59;
-    }
-        .carousel-indicators{
-        position: absolute;
-    top: 550px;
-        }
-    .carousel-indicators .active{ background: linear-gradient(90deg, var(--brand), var(--brand-2)); }
-
-
-
-    /* spacing under fixed-top header */
-     .footer {
-      background-color: #0b0f29;
-      color: #fff;
-      padding: 50px 20px 20px;
-      position: relative;
-    }
-    .footer h6 {
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-    .footer a {
-      display: block;
-      color: #ddd;
-      text-decoration: none;
-      margin-bottom: 10px;
-      transition: 0.3s;
-    }
-    .footer a:hover {
-      color: #fff;
-    }
-    .footer .social-icons a {
-      font-size: 18px;
-      margin-right: 15px;
-      color: #fff;
-      transition: 0.3s;
-    }
-    .footer .social-icons a:hover {
-      color: #0dcaf0;
-    }
-    .app-buttons img {
-      height: 50px;
-      margin-right: 10px;
-      margin-top: 15px;
-    }
-    .footer-bottom {
-      border-top: 1px solid #333;
-      margin-top: 30px;
-      padding-top: 15px;
-      font-size: 14px;
-      color: #aaa;
-      text-align: center;
-    }
-    .footer-bottom a {
-      margin-left: 15px;
-      color: #aaa;
-    }
-    .footer-bottom a:hover {
-      color: #fff;
-    }
-    /* Scroll to top button */
-    #scrollTopBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #fff;
-      color: #000;
-      border: none;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      cursor: pointer;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-    }
+    /* movie cards */
 .movie-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-      transition: transform 0.3s ease-in-out;
-      cursor: pointer;
-    }
-    .movie-card img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-    .movie-card:hover {
-      transform: scale(1.05);
-    }
-    .movie-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(11, 11, 29, 0.95);
-      color: white;
-      opacity: 0;
-      transition: opacity 0.4s ease-in-out;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      border-radius: 10px;
-    }
-    .movie-card:hover .movie-overlay {
-      opacity: 1;
-    }
-    .movie-title {
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .movie-info {
-      font-size: 14px;
-      margin: 5px 0;
-    }
-    .btn-custom {
-      margin-top: 10px;
-      font-size: 14px;
-      border-radius: 20px;
-    }
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  z-index: 1;
+}
+.movie-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.movie-card:hover {
+  transform: scale(1.05);
+}
+.movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 11, 29, 0.95);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 10px;
+  pointer-events: none; /* allow footer clicks to pass */
+}
+.movie-card:hover .movie-overlay {
+  opacity: 1;
+  pointer-events: auto; /* overlay clickable only inside card */
+}
+
+.movie-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+.movie-info {
+  font-size: 14px;
+  margin: 5px 0;
+}
+.btn-custom {
+  margin-top: 10px;
+  font-size: 14px;
+  border-radius: 20px;
+}
+
+/* ======= Footer ======= */
+.footer {
+  background-color: #0b0f29;
+  color: #fff;
+  padding: 50px 20px 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.footer h6 {
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.footer a {
+  color: #aaa;
+  text-decoration: none;
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+}
+
+.footer a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  border-top: 1px solid #333;
+  margin-top: 30px;
+  padding-top: 15px;
+  font-size: 14px;
+  color: #aaa;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-bottom a {
+  color: #aaa;
+  text-decoration: none;
+  margin: 0 8px;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-bottom a:hover {
+  color: #fff;
+}
+
+/* Scroll to top button */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+/* Hide navbar on inactivity */
+.sv-navbar {
+  transition: top 0.4s ease-in-out;
+}
+.sv-navbar.navbar-hidden {
+  top: -80px; /* adjust based on your navbar height */
+}
+
   </style>
 </head>
 <body>
 
-  <!-- ======= NAVBAR ======= -->
-  <nav class="navbar navbar-expand-lg sv-navbar fixed-top ">
-    <div class="container-fluid">
-      <a class="sv-brand" href="#">
-        <span class="sv-logo">▶</span>
-        <span>Streamvid</span>
-        <small class="ms-1 opacity-75">TV</small>
-      </a>
-      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#svNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="svNav">
-        <ul class="navbar-nav ms-3 me-auto">
-          <!-- Home (simple) -->
-          <li class="nav-item"><a class="nav-link active" href="{{ route('home') }}">Home</a></li>
-            <a class="nav-link " href="{{ route('video-index') }}" >Movies</a>
-            <a class="nav-link " href="{{ route('festival-index') }}" >Festivals</a>
-             <a class="nav-link " href="{{ route('favorite') }}" >Favorites</a>
-             <a class="nav-link " href="{{ route('actor.index') }}" >Actors</a>
-        </ul>
-        <!-- Search, locale, user, subscribe -->
-        <div class="d-flex align-items-center gap-3">
-          <div class="sv-search-wrap d-none d-lg-block">
-            <i class="fa-solid fa-magnifying-glass"></i>
+<!-- ======= NAVBAR ======= -->
+<nav class="navbar navbar-expand-lg sv-navbar fixed-top ">
+  <div class="container-fluid">
+    <a class="sv-brand" href="#">
+      <img src="{{ asset('images/logo.png') }}" alt="My Logo" class="sv-logo">
+      <span>ZIGZACK</span>
+      <small class="ms-1 opacity-75">TV</small>
+    </a>
+    <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#svNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="svNav">
+      <ul class="navbar-nav ms-3 me-auto">
+        <li class="nav-item"><a class="nav-link active" href="{{ route('home') }}">Home</a></li>
+        <a class="nav-link " href="{{ route('video-index') }}" >Movies</a>
+        <a class="nav-link " href="{{ route('festival-index') }}" >Festivals</a>
+        <a class="nav-link " href="{{ route('favorite') }}" >Favorites</a>
+        <a class="nav-link " href="{{ route('actor.index') }}" >Actors</a>
+      </ul>
+      <div class="d-flex align-items-center gap-3">
+        <div class="sv-search-wrap d-none d-lg-block">
+          <i class="fa-solid fa-magnifying-glass"></i>
           <form action="{{ route('video-search') }}" method="GET" class="d-flex">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="text" name="q" class="form-control sv-search" placeholder="Find movies, TV shows and more">
-</form>
-          </div>
-          <a class="text-white-50 d-none d-lg-inline" href="#" title="Language"><i class="fa-solid fa-globe"></i> EN</a>
-          <a class="text-white-50 d-none d-lg-inline" href="{{ route('profile.edit') }}" title="Account"><i class="fa-regular fa-user"></i></a>
-<button onclick="location.href='{{ route('plan') }}'" class="sv-subscribe">Subscribe</button>
-   @if(Auth::check())
-                    {{-- User is logged in --}}
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-light">
-                                Log Out
-                            </button>
-                        </form>
-@if (Auth::user()->role === 'content_creator')
-                            {{-- Admin user --}}
-                            <a href="{{ route('video.create') }}" class="btn btn-outline-light">Add Movies</a>
-
-@endif
-                @else
-                    {{-- User is not logged in --}}
-                        <a href="{{ route('login') }}" class="btn btn-outline-light">
-                            Log In
-                        </a>
-                @endif
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" name="q" class="form-control sv-search" placeholder="Find movies, TV shows and more">
+          </form>
         </div>
+        <a class="text-white-50 d-none d-lg-inline" href="{{ route('profile.edit') }}" title="Account"><i class="fa-regular fa-user"></i></a>
+        <button onclick="location.href='{{ route('plan') }}'" class="sv-subscribe">Subscribe</button>
+        @if(Auth::check())
+
+          @if (Auth::user()->role === 'content_creator' || Auth::user()->role === 'admin')
+            <a href="{{ route('video.create') }}" class="btn btn-outline-light">Add Movie</a>
+            <a href="{{ route('user.movies', Auth::user()->id) }}" class="btn btn-outline-light">My Movies</a>
+          @endif
+           <form action="{{ route('logout') }}" method="POST">
+              @csrf
+              <button type="submit" class="btn btn-outline-light">Log Out</button>
+          </form>
+        @else
+          <a href="{{ route('login') }}" class="btn btn-outline-light">Log In</a>
+        @endif
       </div>
     </div>
-  </nav>
-  <div class="sv-spacer"></div>
+  </div>
+</nav>
+
+<div class="sv-spacer"></div>
+
 @yield('content')
+
 <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <!-- Logo + Social -->
-        <div class="col-md-3 mb-4">
-          <h4 class="fw-bold">
-            <i class="fas fa-play-circle text-primary"></i> Streamvid <sup>TV</sup>
-          </h4>
-          <p class="mt-3">Connect with us</p>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-          </div>
-          <p class="mt-3">Download Streamvid mobile app</p>
-          <div class="app-buttons">
-            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
-          </div>
+  <div class="container">
+    <div class="row">
+      <!-- Logo + Social -->
+      <div class="col-md-3 mb-4">
+        <h4 class="fw-bold">
+          <i class="fas fa-play-circle text-primary"></i> ZIGZACK <sup>TV</sup>
+        </h4>
+        <p class="mt-3">Connect with us</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
         </div>
-
-        <!-- Must Watch Movies -->
-        <div class="col-md-2 mb-4">
-          <h6>Must Watch Movies</h6>
-          <a href="#">DJ Tillu</a>
-          <a href="#">The Great Empire</a>
-          <a href="#">Love Story</a>
-          <a href="#">The Reckless</a>
-          <a href="#">Zombie World</a>
+        <p class="mt-3">Download Streamvid mobile app</p>
+        <div class="app-buttons">
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
         </div>
-
-        <!-- Genres -->
-        <div class="col-md-3 mb-4">
-          <h6>Genres</h6>
-          <div class="row">
-            <div class="col-6">
-              <a href="#">Romance</a>
-              <a href="#">Drama</a>
-              <a href="#">Family</a>
-              <a href="#">Comedy</a>
-              <a href="#">Actions</a>
-              <a href="#">Adventure</a>
-            </div>
-            <div class="col-6">
-              <a href="#">Horror</a>
-              <a href="#">Anime</a>
-              <a href="#">Thriller</a>
-              <a href="#">History</a>
-              <a href="#">Sci-Fi</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Help -->
-        <div class="col-md-2 mb-4">
-          <h6>Help</h6>
-          <a href="#">My Account</a>
-          <a href="#">Customer Support</a>
-          <a href="#">Contact Us</a>
-          <a href="#">Advertise</a>
-          <a href="#">Jobs</a>
-        </div>
-
-        <!-- Jobs -->
-        <div class="col-md-2 mb-4">
-          <h6>Jobs</h6>
-          <a href="#">View Plans</a>
-          <a href="#">Blog</a>
-          <a href="#">Devices</a>
-          <a href="#">About Us</a>
-        </div>
-
       </div>
 
-      <!-- Bottom -->
-      <div class="footer-bottom">
-        <p>Copyright © 2025 StreamVid. All rights reserved.
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-        </p>
+      <!-- Must Watch Movies -->
+      <div class="col-md-2 mb-4">
+        <h6>Must Watch Movies</h6>
+        <a href="#">DJ Tillu</a>
+        <a href="#">The Great Empire</a>
+        <a href="#">Love Story</a>
+        <a href="#">The Reckless</a>
+        <a href="#">Zombie World</a>
       </div>
+
+      <!-- Genres -->
+      <div class="col-md-3 mb-4">
+        <h6>Genres</h6>
+        <div class="row">
+          <div class="col-6">
+            <a href="#">Romance</a>
+            <a href="#">Drama</a>
+            <a href="#">Family</a>
+            <a href="#">Comedy</a>
+            <a href="#">Actions</a>
+            <a href="#">Adventure</a>
+          </div>
+          <div class="col-6">
+            <a href="#">Horror</a>
+            <a href="#">Anime</a>
+            <a href="#">Thriller</a>
+            <a href="#">History</a>
+            <a href="#">Sci-Fi</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Help -->
+      <div class="col-md-2 mb-4">
+        <h6>Help</h6>
+        <a href="#">My Account</a>
+        <a href="#">Customer Support</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Advertise</a>
+        <a href="#">Jobs</a>
+      </div>
+
+      <!-- Jobs -->
+      <div class="col-md-2 mb-4">
+        <h6>Jobs</h6>
+        <a href="#">View Plans</a>
+        <a href="#">Blog</a>
+        <a href="#">Devices</a>
+        <a href="#">About Us</a>
+      </div>
+
     </div>
-  </footer>
 
-  <!-- Scroll to top button -->
-  <button id="scrollTopBtn"><i class="fas fa-arrow-up"></i></button>
+    <!-- Bottom -->
+    <div class="footer-bottom">
+      <p class="mb-1">
+        Copyright © 2025 <strong>ZIGZACK</strong>. All rights reserved.
+      </p>
+      <p class="mb-1">
+        Created by
+        <a href="https://wa.me/96181124495" target="_blank" class="text-success fw-bold">
+          Mohamad Houjeiry
+        </a>
+      </p>
+      <p>
+        <a href="#">Privacy Policy</a> |
+        <a href="#">Terms of Service</a>
+      </p>
+    </div>
 
-  <script>
-    // Show scroll button on scroll
-    let scrollBtn = document.getElementById("scrollTopBtn");
-    window.onscroll = function() {
-      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-        scrollBtn.style.display = "flex";
-      } else {
-        scrollBtn.style.display = "none";
-      }
-    };
+  </div>
+</footer>
 
-    // Scroll to top smoothly
-    scrollBtn.onclick = function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-  </script>
- <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Scroll to top button -->
+<button id="scrollTopBtn"><i class="fas fa-arrow-up"></i></button>
 
-  <script>
-    // Optional: open dropdown on hover for keyboard users as well
-    // (Bootstrap already handles click; CSS handles hover. This keeps focus accessible.)
-    document.querySelectorAll('.nav-item.dropdown').forEach(function (el) {
-      el.addEventListener('mouseenter', () => {
-        if (window.innerWidth >= 992) el.querySelector('.dropdown-toggle').setAttribute('aria-expanded','true');
-      });
-      el.addEventListener('mouseleave', () => {
-        if (window.innerWidth >= 992) el.querySelector('.dropdown-toggle').setAttribute('aria-expanded','false');
-      });
+<script>
+  // Show scroll button on scroll
+  let scrollBtn = document.getElementById("scrollTopBtn");
+  window.onscroll = function() {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      scrollBtn.style.display = "flex";
+    } else {
+      scrollBtn.style.display = "none";
+    }
+  };
+
+  // Scroll to top smoothly
+  scrollBtn.onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Optional: open dropdown on hover for keyboard users
+  document.querySelectorAll('.nav-item.dropdown').forEach(function (el) {
+    el.addEventListener('mouseenter', () => {
+      if (window.innerWidth >= 992) el.querySelector('.dropdown-toggle').setAttribute('aria-expanded','true');
     });
-  </script>
+    el.addEventListener('mouseleave', () => {
+      if (window.innerWidth >= 992) el.querySelector('.dropdown-toggle').setAttribute('aria-expanded','false');
+    });
+  });
+</script>
+<script>
+  const navbar = document.querySelector(".sv-navbar");
+  let hideTimer = null;
+
+  function showNavbar() {
+    navbar.classList.remove("navbar-hidden");
+
+    // reset timer
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      navbar.classList.add("navbar-hidden");
+    }, 2000); // hide after 2.5s of inactivity
+  }
+
+  // Detect activity
+  document.addEventListener("mousemove", showNavbar);
+  document.addEventListener("scroll", showNavbar);
+  document.addEventListener("keydown", showNavbar);
+
+  // Start hidden
+  navbar.classList.add("navbar-hidden");
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@
       border-radius: 12px;
       padding: 30px;
       max-width: 700px;
-      margin: 50px auto;
+      margin: 70px auto;
       box-shadow: 0px 0px 25px rgba(0,0,0,0.7);
     }
     .festival-title {
@@ -51,7 +51,7 @@
   </style>
 
 
-  <div class="festival-card">
+  <div class="festival-card ">
     <!-- Festival Title -->
     <h2 class="festival-title">🎉 Summer Music Festival 2025</h2>
 
@@ -64,11 +64,37 @@
 
     <!-- Example Video -->
     <div class="festival-info text-center">
-      <strong>🎬 Featured Video:</strong><br>
-      <video width="100%" controls>
-        <source src="{{ optional($festival->video)->video_url }}" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+      <strong >🎬 Featured Video:</strong><br>
+     @php
+function convertYouTubeUrlToEmbed($url) {
+    $parsedUrl = parse_url($url);
+
+    if (isset($parsedUrl['host']) && (strpos($parsedUrl['host'], 'youtube.com') !== false || strpos($parsedUrl['host'], 'youtu.be') !== false)) {
+        if (strpos($parsedUrl['host'], 'youtube.com') !== false) {
+            parse_str($parsedUrl['query'] ?? '', $queryParams);
+            if (isset($queryParams['v'])) {
+                return 'https://www.youtube.com/embed/' . $queryParams['v'];
+            }
+        } elseif (strpos($parsedUrl['host'], 'youtu.be') !== false) {
+            $videoId = ltrim($parsedUrl['path'], '/');
+            return 'https://www.youtube.com/embed/' . $videoId;
+        }
+    }
+
+    return $url;
+}
+
+// Use the Blade variable directly
+$embedUrl = convertYouTubeUrlToEmbed($festival->video->video_url);
+@endphp
+
+<iframe class="mt-3" width="100%" height="300"
+        src="{{ $embedUrl }}"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+</iframe>
     </div>
 
     <div class="text-center mt-4">

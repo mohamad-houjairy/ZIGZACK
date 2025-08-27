@@ -62,10 +62,9 @@
             <div class="card shadow-sm h-100 border-0 rounded-3">
 
                 <!-- Poster -->
-                <img src="{{ $video->picture ?? asset('images/default.jpg') }}"
-                     class="card-img-top rounded-top-3"
-                     alt="{{ $video->title }}"
-                     style="height: 220px; object-fit: cover;">
+         <img src="{{ asset('images/' . $video->picture) }}"
+         alt="{{ $video->title }}"
+         class="movie-poster mb-3">
 
                 <!-- Card Body -->
                 <div class="card-body text-center d-flex flex-column justify-content-between">

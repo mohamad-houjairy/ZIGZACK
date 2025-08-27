@@ -94,13 +94,50 @@
 
   <!-- Movie Trailer -->
   <div class="video-container ">
-    <iframe src="{{ $video->video_url }}" allowfullscreen></iframe>
+@php
+function convertYouTubeUrlToEmbed($url) {
+    $parsedUrl = parse_url($url);
+
+    if (isset($parsedUrl['host']) && (strpos($parsedUrl['host'], 'youtube.com') !== false || strpos($parsedUrl['host'], 'youtu.be') !== false)) {
+        if (strpos($parsedUrl['host'], 'youtube.com') !== false) {
+            parse_str($parsedUrl['query'] ?? '', $queryParams);
+            if (isset($queryParams['v'])) {
+                return 'https://www.youtube.com/embed/' . $queryParams['v'];
+            }
+        } elseif (strpos($parsedUrl['host'], 'youtu.be') !== false) {
+            $videoId = ltrim($parsedUrl['path'], '/');
+            return 'https://www.youtube.com/embed/' . $videoId;
+        }
+    }
+
+    return $url;
+}
+
+// Use the Blade variable directly
+$embedUrl = convertYouTubeUrlToEmbed($video->video_url);
+@endphp
+
+<iframe width="560" height="315"
+        src="{{ $embedUrl }}"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+</iframe>
+
+
   </div>
 
   <div class="row">
     <!-- Poster + Buttons -->
     <div class="col-md-3">
-      <img src="{{ $video->picture }}" alt="{{ $video->title }}" class="movie-poster mb-3">
+@if($video->picture)
+    <img src="{{ asset('images/' . $video->picture) }}"
+         alt="{{ $video->title }}"
+         class="movie-poster mb-3">
+@endif
+
+
 
       <div class="d-flex mb-3">
         <button class="btn btn-custom"><i class="bi bi-hand-thumbs-up"></i> Like</button>

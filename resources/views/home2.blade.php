@@ -266,7 +266,9 @@
         @foreach($actors as $actor)
             <div class="col-6 col-md-3 col-lg-2">
                 <a href="{{ route('actor.show', $actor->id) }}" class="artist text-center d-block">
-                    <img src="{{ $actor->image_url }}" alt="{{ $actor->name }}" class="img-fluid rounded-circle mb-2">
+                   <img src="{{ $actor->profile_image ? asset('storage/' . $actor->profile_image) : 'https://via.placeholder.com/150x150?text=No+Image' }}"
+     class="card-img-top"
+     alt="{{ $actor->name }}">
                     <div class="name">{{ $actor->name }}</div>
                 </a>
             </div>

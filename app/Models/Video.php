@@ -22,6 +22,10 @@ protected $fillable = [
     'views_count',
     'duration',
 ];
+protected $casts = [
+    'starting_date' => 'date',
+    'ending_date' => 'date',
+];
 
     public function creator()
     {

@@ -44,6 +44,9 @@ Route::get('/videos/category/{id}', [VideoController::class, 'videosByCategory']
 Route::post('/video/{id}/review', [ReviewController::class, 'storeReview'])->name('video.review')->middleware('auth');
 Route::post('/create-video', [VideoController::class, 'store'])->name('video.store')->middleware('auth');
 Route::get('/video', [VideoController::class, 'create'])->name('video.create')->middleware('auth');
+Route::get('/video/{video}/edit', [VideoController::class, 'edit'])->name('video.edit')->middleware('auth');
+Route::patch('/video/{video}', [VideoController::class, 'update'])->name('video.update')->middleware('auth');
+Route::delete('/video/{id}', [VideoController::class, 'destroy'])->name('video.destroy')->middleware('auth');
 ///////////////////////////////////// FESTIVAL////////////////////////////////////////////////////////////////////
 Route::get('/festival_index', [FestivalController::class, 'index'])->name('festival-index');
 Route::get('/festival/{id}', [FestivalController::class, 'show'])->name('festival.show');
@@ -63,3 +66,4 @@ Route::post('/profile', [UserController::class, 'update'])->name('profile.update
 Auth::routes(['register' => false, 'reset' => true, 'verify' => false]);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/user/{id}/movies', [UserController::class, 'userMovies'])->name('user.movies')->middleware('auth');

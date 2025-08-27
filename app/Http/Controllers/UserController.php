@@ -107,5 +107,15 @@ if ($user->role === 'content_creator') {
         $user = auth()->user();
         return view('profile-edit', compact('user'));
     }
+public function userMovies($userId)
+{
+    // Get movies created by the given user and eager load category if needed
+    $movies = \App\Models\Video::where('creator_id', $userId)
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->groupBy('distribution'); // group by type
+
+    return view('user-movies', compact('movies'));
+}
 
 }

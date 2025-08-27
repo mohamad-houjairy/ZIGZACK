@@ -24,17 +24,31 @@ class ActorController extends Controller
 
         return view('actor-info', compact('actor' ));
     }
-    public function store(Request $request)
-    {
-        // Logic to create a new actor
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'bio' => 'nullable|string',
-            'birthdate' => 'nullable|date',
-        ]);
-        $actor = Actor::create($request->all());
-        return response()->json($actor, 201);
+public function store(Request $request)
+{
+    // Validate the request
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'bio' => 'nullable|string',
+        'birthdate' => 'nullable|date',
+        'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // optional validation for image
+    ]);
+
+    // Handle file upload if present
+    if ($request->hasFile('picture')) {
+        $image = $request->file('picture');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $imageName);
+        $validated['profile_image'] = 'images/' . $imageName; // store the relative path
     }
+
+    // Create the actor with validated data
+    $actor = Actor::create($validated);
+
+    return response()->json($actor, 201);
+}
+
+
     public function update(Request $request, $id)
     {
         // Logic to update an existing actor

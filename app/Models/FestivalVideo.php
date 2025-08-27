@@ -18,6 +18,11 @@ class FestivalVideo extends Model
         'organizer_name',
         'organizer_phone',
     ];
+    protected $casts = [
+    'starting_date' => 'date',
+    'ending_date' => 'date',
+];
+
     public function video()
     {
         return $this->belongsTo(Video::class);

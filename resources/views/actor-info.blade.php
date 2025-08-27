@@ -59,7 +59,12 @@
   <div class="row">
     <!-- Profile Image & Info -->
     <div class="col-md-3">
-      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Actor" class="profile-img mb-3">
+<img src="{{ asset('images/' . $actor->profile_image) }}" alt="{{ $actor->name }}">
+
+
+
+
+
 
 
       <div class="personal-info mt-4">

@@ -47,14 +47,68 @@
         </div>
 
         <!-- Distribution -->
-        <div class="mb-3">
-          <label class="form-label">Distribution</label>
-          <select name="distribution" class="form-select">
-            <option value="festival_only">Festival Only</option>
-            <option value="public" selected>Public</option>
-            <option value="library">Library</option>
-          </select>
-        </div>
+   <div class="mb-3">
+    <label class="form-label">Distribution</label>
+    <select name="distribution" id="distribution" class="form-select">
+        <option value="festival_only">Festival Only</option>
+        <option value="public" selected>Public</option>
+        <option value="library">Library</option>
+    </select>
+</div>
+
+<!-- Extra form for festival_only -->
+<!-- Festival Details (hidden by default) -->
+<div class="m-3" id="festival-extra" style="display: none;">
+  <h5 class="mb-3">🎉 Festival Details</h5>
+
+  <div class="row g-3">
+    <!-- Title -->
+    <div class="col-md-6">
+      <label for="festival_title" class="form-label">Festival Title</label>
+      <input type="text" name="festival_title" id="festival_title" class="form-control" placeholder="Enter festival title">
+    </div>
+
+    <!-- Organizer Name -->
+    <div class="col-md-6">
+      <label for="organizer_name" class="form-label">Organizer Name</label>
+      <input type="text" name="organizer_name" id="organizer_name" class="form-control" placeholder="Enter organizer name">
+    </div>
+
+    <!-- Organizer Phone -->
+    <div class="col-md-6">
+      <label for="organizer_phone" class="form-label">Organizer Phone</label>
+      <input type="tel" name="organizer_phone" id="organizer_phone" class="form-control" placeholder="+961 71 234 567">
+    </div>
+
+    <!-- Location -->
+    <div class="col-md-6">
+      <label for="location" class="form-label">Location</label>
+      <input type="text" name="location" id="location" class="form-control" placeholder="Enter festival location">
+    </div>
+
+    <!-- Coordinates -->
+    <div class="col-md-6">
+      <label for="longitude" class="form-label">Longitude</label>
+      <input type="number" step="any" name="longitude" id="longitude" class="form-control" placeholder="e.g. 35.5131">
+    </div>
+
+    <div class="col-md-6">
+      <label for="latitude" class="form-label">Latitude</label>
+      <input type="number" step="any" name="latitude" id="latitude" class="form-control" placeholder="e.g. 33.8938">
+    </div>
+
+    <!-- Dates -->
+    <div class="col-md-6">
+      <label for="starting_date" class="form-label">Starting Date</label>
+      <input type="date" name="starting_date" id="starting_date" class="form-control">
+    </div>
+
+    <div class="col-md-6">
+      <label for="ending_date" class="form-label">Ending Date</label>
+      <input type="date" name="ending_date" id="ending_date" class="form-control">
+    </div>
+  </div>
+</div>
 
         <!-- Thumbnail -->
         <div class="mb-3">
@@ -106,6 +160,18 @@
 <!-- jQuery UI -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+    const distributionSelect = document.getElementById('distribution');
+    const festivalExtra = document.getElementById('festival-extra');
+
+    distributionSelect.addEventListener('change', function() {
+        if (this.value === 'festival_only') {
+            festivalExtra.style.display = 'block';
+        } else {
+            festivalExtra.style.display = 'none';
+        }
+    });
+</script>
 
 <script>
 $(function() {
