@@ -242,9 +242,9 @@
                 <a href="{{ route('festival.show', $festival->id) }}" class="text-decoration-none text-white">
                     <div class="card-series h-100 {{ $index == 0 ? 'featured-card' : '' }}">
                         <div class="card-img-container mb-2">
-                            <img src="{{ optional($festival->video)->video_url ?? 'https://via.placeholder.com/400x400' }}"
-                                 alt="{{ optional($festival->video)->title ?? 'No category' }}"
-                                 class="img-fluid rounded">
+                            <img src="{{ asset('images/' . $festival->video->picture) }}"
+                                 alt="{{ $festival->video->title }}"
+                                 class="festival-image">
                         </div>
                         <div class="card-content">
                             <h6>{{ optional($festival->video)->title ?? 'No category' }}</h6>
@@ -266,9 +266,8 @@
         @foreach($actors as $actor)
             <div class="col-6 col-md-3 col-lg-2">
                 <a href="{{ route('actor.show', $actor->id) }}" class="artist text-center d-block">
-                   <img src="{{ $actor->profile_image ? asset('storage/' . $actor->profile_image) : 'https://via.placeholder.com/150x150?text=No+Image' }}"
-     class="card-img-top"
-     alt="{{ $actor->name }}">
+                 <img src="{{ asset('images/' . $actor->profile_image) }}" alt="{{ $actor->name }}">
+
                     <div class="name">{{ $actor->name }}</div>
                 </a>
             </div>

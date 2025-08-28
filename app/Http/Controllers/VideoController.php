@@ -217,13 +217,12 @@ $count = $videosall->count();
 public function home()
 {
     $actors = Actor::all()->take(6);
-    $videos = Video::latest()->take(4)->get();
-    $videos1 = Video::latest()->take(4)->get();
+    $videos = Video::orderBy('id', 'asc')->limit(4)->get();
     $festivals = FestivalVideo::latest()->take(3)->get();
    $sliders = Slider::with('video')
                      ->orderBy('position', 'asc')
                      ->get();
-    return view('home', compact('actors', 'videos', 'videos1', 'festivals', 'sliders'));
+    return view('home', compact('actors', 'videos', 'festivals', 'sliders'));
 }
 public function create()
 {

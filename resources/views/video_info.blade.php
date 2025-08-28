@@ -169,7 +169,7 @@ $embedUrl = convertYouTubeUrlToEmbed($video->video_url);
 <div class="top-artists ">
 @foreach($actors as $actor)
     <a href="{{{ route('actor.show', $actor->id) }}}" class="artist" >
-        <img src="{{ $actor->image_url }}" alt="{{ $actor->name }}">
+   <img src="{{ asset('images/' . $actor->profile_image) }}" alt="{{ $actor->name }}">
         <div class="name">{{ $actor->name }}</div>
     </a>
 @endforeach

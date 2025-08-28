@@ -31,14 +31,14 @@
 
 
       <!-- Slide 1 -->
-     <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+     <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel my-5">
   <div class="carousel-inner">
     @foreach($sliders as $key => $slider)
       @php
         $video = $slider->video;
       @endphp
       <div class="carousel-item @if($key == 0) active @endif"
-           style="background-image: url('{{ $video->picture }}'); background-size: cover; background-position: center;">
+           style="background-image: url('{{ asset('images/' . $video->picture) }}'); background-size: cover; background-position: center;">
         <div class="sv-caption">
           <div class="sv-kicker text-uppercase">{{ $video->category?->name ?? 'No Category' }}</div>
           <h1 class="sv-title">{{ $video->title }}</h1>
@@ -81,51 +81,56 @@
 
 <!-- Section -->
   <div class="container my-5">
-    <h3 class="mb-4">Trending Movies 🔥</h3>
-      <div class="row g-4">
+    <div class="col-md-12">
+        <h3 class="mb-4">Trending Movies</h3>
+
+        @if($videos->isEmpty())
+            <p class="text-muted">No movies found in this category.</p>
+        @else
+            <div class="row g-4">
                 @foreach ($videos as $video)
-                    <div class="col-md-3">
+                    <div class="col-6 col-md-3">
                         <div class="movie-card">
-                            <img src="{{$video->video_url}}" >
+
+                            <!-- Poster -->
+                            <img src="{{ asset('images/' . $video->picture) }}"
+                                 alt="{{ $video->title }}"
+                                 class="movie-poster mb-3">
+
+                            <!-- Overlay -->
                             <div class="movie-overlay">
                                 <div class="movie-title">{{ $video->title }}</div>
                                 <div class="movie-info">
-                                    price: {{ $video->price }} . distribution: {{ $video->distribution }} <br>
-                                    category: {{ optional($video->category)->name ?? 'No category' }}
+                                    Price: ${{ $video->price }} <br>
+                                    Distribution: {{ $video->distribution }} <br>
+                                    Category: {{ optional($video->category)->name ?? 'No category' }}
                                 </div>
-                                <button onclick="window.location='{{ route('video.show', $video->id) }}'" class="btn btn-primary btn-custom">▶ Play Now</button>
-                                <button class="btn btn-outline-light btn-custom">+ Watch Later</button>
+
+                                <div class="d-flex flex-column gap-2 mt-2">
+                                    <!-- Play Button -->
+                                    <a href="{{ route('video.show', $video->id) }}" class="btn btn-primary w-100">
+                                        ▶ Play Now
+                                    </a>
+
+                                    <!-- Watch Later Form -->
+                                    <form action="{{ route('favorite.add', $video->id) }}" method="POST" class="w-100">
+                                        @csrf
+                                        <button type="submit" class="btn btn-outline-warning w-100">
+                                            + Watch Later
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 @endforeach
             </div>
-  </div>
-   <div class="container my-5">
-    <h3 class="mb-4"> New Releases</h3>
-     <div class="row g-4">
-                @foreach ($videos1 as $video)
-                    <div class="col-md-3">
-                        <div class="movie-card">
-                            <img src="{{$video->video_url}}" >
-                            <div class="movie-overlay">
-                                <div class="movie-title">{{ $video->title }}</div>
-                                <div class="movie-info">
-                                    price: {{ $video->price }} . distribution: {{ $video->distribution }} <br>
-                                    category: {{ optional($video->category)->name ?? 'No category' }}
-                                </div>
-                                <button onclick="window.location='{{ route('video.show', $video->id) }}'" class="btn btn-primary btn-custom">▶ Play Now</button>
-      <form action="{{ route('favorite.add' , $video->id) }}" method="POST">
-    @csrf
-    <input type="hidden" name="video_id" value="{{ $video->id }}">
-         <button  class="btn btn-outline-light btn-custom">+ Watch Later</button>
-</form>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-  </div>
+        @endif
+    </div>
+</div>
+
+
   @include('home2')
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

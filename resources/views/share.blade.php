@@ -142,52 +142,74 @@
 
     /* movie cards */
 .movie-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  transition: transform 0.3s ease-in-out;
-  cursor: pointer;
-  z-index: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
 }
+
 .movie-card img {
-  width: 100%;
-  height: 280px;
-  object-fit: cover;
-  border-radius: 10px;
+    width: 100%;
+    height: auto; /* let image determine height */
+    max-height: 400px; /* optional: limit maximum height */
+    object-fit: contain; /* show full image */
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+    background: #000; /* optional: black background for empty space */
 }
+
+
 .movie-card:hover {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
+
 .movie-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(11, 11, 29, 0.95);
-  color: white;
-  opacity: 0;
-  transition: opacity 0.4s ease-in-out;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  border-radius: 10px;
-  pointer-events: none; /* allow footer clicks to pass */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 11, 29, 0.85);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 10px;
+    pointer-events: none;
 }
+
 .movie-card:hover .movie-overlay {
-  opacity: 1;
-  pointer-events: auto; /* overlay clickable only inside card */
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .movie-title {
-  font-size: 18px;
-  font-weight: bold;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
+
 .movie-info {
-  font-size: 14px;
-  margin: 5px 0;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
+
+@media (max-width: 768px) {
+    .movie-card img {
+        height: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    .movie-card img {
+        height: 200px;
+    }
+}
+
 .btn-custom {
   margin-top: 10px;
   font-size: 14px;
